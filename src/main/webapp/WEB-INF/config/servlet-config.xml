@@ -67,6 +67,6 @@
  
  <bean class="org.springframework.web.servlet.view.BeanNameViewResolver" p:order="0"></bean>
  
-   <import resource="classpath:security-config.xml"/>
+   <import resource="/security-config.xml"/>
    <import resource="classpath:jpaContext.xml"/>
 </beans>

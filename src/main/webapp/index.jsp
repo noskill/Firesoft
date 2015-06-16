@@ -144,8 +144,8 @@
           Add new post »
         </a>
         
-        <sec:authorize ifAnyGranted="ROLE_ADMIN">
         
+        <sec:authorize access="hasRole('ROLE_ADMIN')">
         
          <a class="btn btn-primary" href="EditPost.html">
           Edit new post »
