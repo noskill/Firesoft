@@ -140,9 +140,12 @@
             Welcome to Firesoft.io <sec:authentication property="name"/> !
           </h1>
                   </div>
-        <a class="btn btn-primary" href="addPost.html">
-          Add new post »
-        </a>
+
+        <sec:authorize access="hasRole('ROLE_USER')">
+	        <a class="btn btn-primary" href="addPost.html">
+	          Add new post »
+	        </a>
+        </sec:authorize>
         
         
         <sec:authorize access="hasRole('ROLE_ADMIN')">

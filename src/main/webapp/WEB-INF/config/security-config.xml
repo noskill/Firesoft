@@ -14,7 +14,9 @@
 
 <http auto-config="true">
    
-    <intercept-url pattern="/**" access="hasRole('ROLE_USER')"/>
+    <intercept-url pattern="/login" access="permitAll"/>
+    <intercept-url pattern="/Firesoftblog" access="permitAll"/>
+    <intercept-url pattern="/addPost" access="hasRole('ROLE_USER')"/>
 
 </http>		
 
