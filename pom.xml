@@ -9,6 +9,9 @@
   <url>http://maven.apache.org</url>
   <dependencies>
   
+
+  
+  
      <dependency>
     	<groupId>org.springframework.security</groupId>
     	<artifactId>spring-security-taglibs</artifactId>
@@ -114,6 +117,26 @@
 </dependency> 
 
 <dependency>
+	<groupId>javax.servlet</groupId>
+	<artifactId>javax.servlet-api</artifactId>
+	<version>3.1.0</version>
+</dependency>
+
+<dependency>
+	<groupId>javax.servlet.jsp.jstl</groupId>
+	<artifactId>javax.servlet.jsp.jstl-api</artifactId>
+	<version>1.2.1</version>
+</dependency>
+
+
+<dependency>
+	<groupId>javax.servlet.jsp</groupId>
+	<artifactId>javax.servlet.jsp-api</artifactId>
+	<version>2.3.1</version>
+</dependency>
+
+
+<dependency>
 	<groupId>com.fasterxml.jackson.core</groupId>
 	<artifactId>jackson-databind</artifactId>
 	<version>2.5.1</version>
@@ -138,10 +161,29 @@
 		<artifactId>spring-oxm</artifactId>
 		<version>4.1.6.RELEASE</version>
 	</dependency>  
+	
+	<dependency>
+	<groupId>javax.servlet</groupId>
+	<artifactId>jsp-api</artifactId>
+	<version>2.0</version>
+</dependency>
+	
 
 
   </dependencies>
   <build>
-    <finalName>Firesoftblog</finalName>
-  </build>
+   <finalName>Firesoftblog</finalName>
+    <plugins>
+        <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>3.1</version>
+        <configuration>
+            <source>1.7</source>
+            <target>1.7</target>
+        </configuration>
+    </plugin>
+    </plugins>
+</build>
+
 </project>

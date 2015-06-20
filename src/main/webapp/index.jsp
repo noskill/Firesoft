@@ -1,5 +1,6 @@
 <%@taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
     
  <!DOCTYPE html>
 <html lang="en">
@@ -11,7 +12,18 @@
 <link href="<c:url value="/resources/css/normalize.css" />" rel="stylesheet">
 </head>
 <body>
+
+   <c:if test="${not empty error}">
+        <div class="errorblock">
+           Your login was unsuccessful. <br />
+           Caused: ${sessionScope["SPRING_SECURITY_LAST_EXCEPTION"].message}
+        </div>
+    </c:if>
+    
 <div class="container">
+
+	
+    
 	<a id="modal_trigger" href="#modal" class="btn">Click here to Login or register</a>
 
 	<div id="modal" class="popupContainer" style="display:none;">
@@ -45,16 +57,21 @@
 					<div class="one_half last"><a href="#" id="register_form" class="btn">Sign up</a></div>
 				</div>
 			</div>
+			
+			
 
 			<!-- Username & Password Login form -->
 			<div class="user_login">
-				<form>
+				<form name='f' action='/Firesoftblog/login' method='POST' id="ff">
+				
+			       
+				
 					<label>Email / Username</label>
-					<input type="text" />
+					<input type="text" name='username' value=''/>
 					<br />
 
 					<label>Password</label>
-					<input type="password" />
+					<input type="password" name='password' />
 					<br />
 
 					<div class="checkbox">
@@ -64,9 +81,19 @@
 
 					<div class="action_btns">
 						<div class="one_half"><a href="#" class="btn back_btn"><i class="fa fa-angle-double-left"></i> Back</a></div>
-						<div class="one_half last"><a href="#" class="btn btn_red">Login</a></div>
+						<div class="one_half last">
+						<a class="btn btn_red" href="javascript: submitForm();">Login</a></div>
 					</div>
+					<sec:csrfInput/>
 				</form>
+				
+				<script>
+function submitForm(){
+	
+    $('#ff').submit();
+}
+</script>
+				
 
 				<a href="#" class="forgot_password">Forgot password?</a>
 			</div>
@@ -145,6 +172,7 @@
         </a>
         
         
+        
         <sec:authorize access="hasRole('ROLE_ADMIN')">
         
          <a class="btn btn-primary" href="EditPost.html">
@@ -152,6 +180,19 @@
         </a>
         
         </sec:authorize>
+        
+      <!--    <a class="btn" href="<spring:url value="/logout" />">
+         Logout ${pageContext.request.remoteUser}
+         </a>
+         <sec:csrfInput/>-->
+         
+       
+   <c:url var="logoutUrl" value="logout"/>
+<form action="${logoutUrl}" method="post">
+  <input class="btn btn-warning" type="submit" value="logout" />
+  <sec:csrfInput/>
+</form> 
+
       </div>
       <div>
       </div>

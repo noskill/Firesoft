@@ -66,7 +66,8 @@
  p:prefix="/WEB-INF/jsp/" p:suffix=".jsp" p:order="2"/>
  
  <bean class="org.springframework.web.servlet.view.BeanNameViewResolver" p:order="0"></bean>
- 
+    
+    <import resource="classpath:jpaContext.xml"/>
    <import resource="/security-config.xml"/>
-   <import resource="classpath:jpaContext.xml"/>
+   
 </beans>
