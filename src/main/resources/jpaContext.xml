@@ -12,8 +12,13 @@
 
 <bean class="org.springframework.orm.jpa.support.PersistenceAnnotationBeanPostProcessor" />
 
+
+<!-- a shared request cache is required for multiple http elements -->
+<bean id="requestCache" class="org.springframework.security.web.savedrequest.HttpSessionRequestCache" />
+    
 <bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
     <property name="persistenceUnitName" value="punit" />
+    <property name="packagesToScan" value="io.firesoft.model"></property>
     <property name="dataSource" ref="dataSource" />
     <property name="jpaVendorAdapter">
         <bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
