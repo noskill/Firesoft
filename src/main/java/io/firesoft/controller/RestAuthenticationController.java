@@ -1,4 +1,4 @@
-package io.firesoft;
+package io.firesoft.controller;
 
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -21,7 +21,7 @@ public class RestAuthenticationController {
         return headers;
     }
 
-    @RequestMapping(value="/login-page", method = RequestMethod.GET)
+    @RequestMapping(value="/", method = RequestMethod.GET)
     public ResponseEntity<String> apiLoginPage() {
         return new ResponseEntity<String>(getJsonHeaders(), HttpStatus.UNAUTHORIZED);
     }

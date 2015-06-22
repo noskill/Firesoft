@@ -71,7 +71,8 @@
 
 			<!-- Username & Password Login form -->
 			<div class="user_login">
-				<form name='f' action='/rest/security/login-processing' method='POST' id="ff">
+			    <form name='f' action="/Firesoftblog/rest/security/login-processing" method='POST' id="ff">
+				
 				
 			       
 				
@@ -161,7 +162,12 @@
 		});
 
 	})
-	
+
+$("body").bind("ajaxSend", function(elm, xhr, s){
+	if (s.type == "POST") {
+		xhr.setRequestHeader('X-CSRF-Token', csrf_token);
+	}
+});
 
 function getParameterByName(name) {
     name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");

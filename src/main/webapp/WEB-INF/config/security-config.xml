@@ -7,57 +7,72 @@ xsi:schemaLocation="http://www.springframework.org/schema/beans
 		   http://www.springframework.org/schema/security
 		   http://www.springframework.org/schema/security/spring-security.xsd">
 
-		 
+    <!-- a shared request cache is required for multiple http elements -->
+    <beans:bean id="requestCache" class="org.springframework.security.web.savedrequest.HttpSessionRequestCache" />
 
-	 
+    <!-- remove security from static resources to avoid going through the security filter chain -->
+    <http pattern="/resources/**" security="none" />
+
+    <!-- http config for REST services (AJAX interface) 
+    =================================================== -->
+    <http auto-config="true" use-expressions="true" pattern="/rest/**">
+        <!-- login configuration 
+            login-processing-url="/rest/security/login-processing" front-end AJAX requests for authentication POST to this URL
+            login-page="/rest/security/login-page" means "authentication is required"
+            authentication-failure-url="/rest/security/authentication-failure" means "authentication failed, bad credentials or other security exception"
+            default-target-url="/rest/security/default-target" front-end AJAX requests are redirected here after success authentication
+        -->
+        <form-login 
+            login-processing-url="/rest/security/login-processing" 
+            login-page="/" 
+            authentication-failure-url="/rest/security/authentication-failure" 
+            default-target-url="/" 
+            always-use-default-target="true" />
+        <logout logout-url="/rest/security/logout-url" />
 
 
-<!-- http config for REST services (AJAX interface) 
-=================================================== -->
-<http auto-config="true" use-expressions="true" pattern="/rest/**">
-    <!-- login configuration 
-        login-processing-url="/rest/security/login-processing" front-end AJAX requests for authentication POST to this URL
-        login-page="/rest/security/login-page" means "authentication is required"
-        authentication-failure-url="/rest/security/authentication-failure" means "authentication failed, bad credentials or other security exception"
-        default-target-url="/rest/security/default-target" front-end AJAX requests are redirected here after success authentication
-    -->
-    <form-login 
-        login-processing-url="/rest/security/login-processing" 
-        login-page="/rest/security/login-page" 
-        authentication-failure-url="/rest/security/authentication-failure" 
-        default-target-url="/rest/security/default-target" 
-        always-use-default-target="true" />
-    <logout logout-url="/rest/security/logout-url" />
+		<intercept-url pattern="/rest/security/login-page" access="permitAll"/>
+		<intercept-url pattern="/rest/security/login-processing" access="permitAll"/>
+		<intercept-url pattern="/rest/security/default-target" access="isAuthenticated()" />
+        <!-- REST services can be secured here, will respond with JSON instead of HTML -->
+        <intercept-url pattern="/rest/calendar/**" access="hasRole('ROLE_USER')" />
 
-    <!-- REST services can be secured here, will respond with JSON instead of HTML -->
-    <intercept-url pattern="/rest/break**" access="hasRole('ROLE_USER')" />
+        <!-- other REST intercept-urls go here -->
 
-    <!-- other REST intercept-urls go here -->
+        <!-- end it with a catch all -->
+        <intercept-url pattern="/rest/**" access="isAuthenticated()" />
 
-    <!-- end it with a catch all -->
-    <intercept-url pattern="/rest/**" access="isAuthenticated()" />
+        <!-- reference to the shared request cache -->
+        <request-cache ref="requestCache"/>
+    </http>
 
-    <!-- reference to the shared request cache -->
-    <request-cache ref="requestCache"/>
-</http>
+    <!-- http config for regular HTML pages
+    =================================================== -->
+    <http auto-config="true" use-expressions="true">
+        <form-login 
+            login-processing-url="/security/j_spring_security_check" 
+            login-page="/login" 
+            authentication-failure-url="/login?login_error=true" />
+        <logout logout-url="/security/j_spring_security_logout" />
 
-<!-- http config for regular HTML pages
-=================================================== -->
-<http auto-config="true" use-expressions="true" pattern="/">
 
-    <!-- other intercept-urls go here -->
+		<intercept-url pattern="/rest/security/login-page" access="permitAll"/>
+		<intercept-url pattern="/rest/security/login-processing" access="permitAll"/>
+ 
+        <intercept-url pattern="/user/**" access="hasRole('ROLE_USER')" />
+		<intercept-url pattern="/admin/**" access="hasRole('ROLE_ADMIN')" />
+        <!-- other intercept-urls go here -->
 
-    <!-- in my app's case, the HTML config ends with permitting all users and requiring HTTPS
-         it is always a good idea to send sensitive information like passwords over HTTPS -->
-    <intercept-url pattern="/" access="permitAll" requires-channel="http" />
+        <!-- in my app's case, the HTML config ends with permitting all users and requiring HTTPS
+             it is always a good idea to send sensitive information like passwords over HTTPS -->
+        <intercept-url pattern="/**" access="permitAll" requires-channel="http" />
 
-    <!-- reference to the shared request cache -->
-    <request-cache ref="requestCache"/>
-</http>
-    
+        <!-- reference to the shared request cache -->
+        <request-cache ref="requestCache"/>
+    </http>
 
-  <!-- remove security from static resources to avoid going through the security filter chain -->
-   <http pattern="/resources/**" security="none" />
+    <!-- authentication manager and other configuration go below -->
+
 
 <authentication-manager>
 	<authentication-provider>
