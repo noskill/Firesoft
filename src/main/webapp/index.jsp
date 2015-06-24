@@ -28,179 +28,159 @@
 </c:if>
 
 <div class="container">
+  <a id="modal_trigger" href="#modal" class="btn">Click here to Login or register</a>
 
-	<a id="modal_trigger" href="#modal" class="btn">Click here to Login or register</a>
-
-	<div id="modal" class="popupContainer" style="display:none;">
-	
-
+    <div id="modal" class="popupContainer" style="display:none;">
     
     
-		<header class="popupHeader">
-			<span class="header_title">Login</span>
-			<span class="modal_close"><i class="fa fa-times"></i></span>
-		</header>
-		
-		<section class="popupBody">
-			<!-- Social Login -->
-			<div class="social_login">
-				<div class="">
-					<a href="#" class="social_box fb">
-						<span class="icon"><i class="fa fa-facebook"></i></span>
-						<span class="icon_title">Connect with Facebook</span>
-						
-					</a>
+        <header class="popupHeader">
+            <span class="header_title">Login</span>
+            <span class="modal_close"><i class="fa fa-times"></i></span>
+        </header>
+        
+        <section class="popupBody">
+            <!-- Social Login -->
+            <div class="social_login">
+                <div class="">
+                    <a href="#" class="social_box fb">
+                        <span class="icon"><i class="fa fa-facebook"></i></span>
+                        <span class="icon_title">Connect with Facebook</span>
+                        
+                    </a>
 
-					<a href="#" class="social_box google">
-						<span class="icon"><i class="fa fa-google-plus"></i></span>
-						<span class="icon_title">Connect with Google</span>
-					</a>
-				</div>
+                    <a href="#" class="social_box google">
+                        <span class="icon"><i class="fa fa-google-plus"></i></span>
+                        <span class="icon_title">Connect with Google</span>
+                    </a>
+                </div>
 
-				<div class="centeredText">
-					<span>Or use your Email address</span>
-				</div>
+                <div class="centeredText">
+                    <span>Or use your Email address</span>
+                </div>
 
-				<div class="action_btns">
-					<div class="one_half"><a href="#" id="login_form" class="btn">Login</a></div>
-					<div class="one_half last"><a href="#" id="register_form" class="btn">Sign up</a></div>
-				</div>
-			</div>
-			
-			
+                <div class="action_btns">
+                    <div class="one_half"><a href="#" id="login_form" class="btn">Login</a></div>
+                    <div class="one_half last"><a href="#" id="register_form" class="btn">Sign up</a></div>
+                </div>
+            </div>
+            
+            
 
-			<!-- Username & Password Login form -->
-			<div class="user_login">
-			    <form name='f' action="/Firesoftblog/rest/security/login-processing" method='POST' id="ff">
-				
-				
-			       
-				
-					<label>Email / Username</label>
-					<input type="text" name='username' value=''/>
-					<br />
+            <!-- Username & Password Login form -->
+            <div class="user_login">
+                <form name='f' action="/Firesoftblog/login" method='POST' id="ff">
+                
+                
+                   
+                
+                    <label>Email / Username</label>
+                    <input type="text" name='username' value=''/>
+                    <br />
 
-					<label>Password</label>
-					<input type="password" name='password' />
-					<br />
+                    <label>Password</label>
+                    <input type="password" name='password' />
+                    <br />
 
-					<div class="checkbox">
-						<input id="remember" type="checkbox" />
-						<label for="remember">Remember me on this computer</label>
-					</div>
+                    <div class="checkbox">
+                        <input id="remember" type="checkbox" />
+                        <label for="remember">Remember me on this computer</label>
+                    </div>
 
-					<div class="action_btns">
-						<div class="one_half"><a href="#" class="btn back_btn"><i class="fa fa-angle-double-left"></i> Back</a></div>
-						<div class="one_half last">
-						<a class="btn btn_red" href="javascript: submitForm();">
-						Login</a>
-						</div>
-					</div>
-					<sec:csrfInput/>
-				</form>
-				
+                    <div class="action_btns">
+                        <div class="one_half"><a href="#" class="btn back_btn"><i class="fa fa-angle-double-left"></i> Back</a></div>
+                        <div class="one_half last">
+                        <a class="btn btn_red" href="javascript: submitForm();">
+                        Login</a>
+                        </div>
+                    </div>
+                    <sec:csrfInput/>
+                </form>
+                
 
-				<a href="#" class="forgot_password">Forgot password?</a>
-			</div>
+                <a href="#" class="forgot_password">Forgot password?</a>
+                
+                <div class="error" id="error_login"></div>
+            </div>
 
-			<!-- Register Form -->
-			<div class="user_register">
-				<form>
-					<label>Full Name</label>
-					<input type="text" />
-					<br />
+            <!-- Register Form -->
+            <div class="user_register">
+                <form>
+                    <label>Full Name</label>
+                    <input type="text" />
+                    <br />
 
-					<label>Email Address</label>
-					<input type="email" />
-					<br />
+                    <label>Email Address</label>
+                    <input type="email" />
+                    <br />
 
-					<label>Password</label>
-					<input type="password" />
-					<br />
+                    <label>Password</label>
+                    <input type="password" />
+                    <br />
 
-					<div class="checkbox">
-						<input id="send_updates" type="checkbox" />
-						<label for="send_updates">Send me occasional email updates</label>
-					</div>
+                    <div class="checkbox">
+                        <input id="send_updates" type="checkbox" />
+                        <label for="send_updates">Send me occasional email updates</label>
+                    </div>
 
-					<div class="action_btns">
-						<div class="one_half"><a href="#" class="btn back_btn"><i class="fa fa-angle-double-left"></i> Back</a></div>
-						<div class="one_half last"><a href="#" class="btn btn_red">Register</a></div>
-					</div>
-				</form>
-			</div>
-		</section>
-	</div>
+                    <div class="action_btns">
+                        <div class="one_half"><a href="#" class="btn back_btn"><i class="fa fa-angle-double-left"></i> Back</a></div>
+                        <div class="one_half last"><a href="#" class="btn btn_red">Register</a></div>
+                    </div>
+                </form>
+            </div>
+        </section>
+    </div>
 </div>
 
 <script type="text/javascript">
-	$("#modal_trigger").leanModal({top : 200, overlay : 0.6, closeButton: ".modal_close" });
-
-	$(function(){
-		// Calling Login Form
-		$("#login_form").click(function(){
-			$(".social_login").hide();
-			$(".user_login").show();
-			return false;
-		});
-
-		// Calling Register Form
-		$("#register_form").click(function(){
-			$(".social_login").hide();
-			$(".user_register").show();
-			$(".header_title").text('Register');
-			return false;
-		});
-
-		// Going back to Social Forms
-		$(".back_btn").click(function(){
-			$(".user_login").hide();
-			$(".user_register").hide();
-			$(".social_login").show();
-			$(".header_title").text('Login');
-			return false;
-		});
-
-	})
-
+    $("#modal_trigger").leanModal({top : 200, overlay : 0.6, closeButton: ".modal_close" });
+    $(function(){
+        // Calling Login Form
+        $("#login_form").click(function(){
+            $(".social_login").hide();
+            $(".user_login").show();
+            return false;
+        });
+        // Calling Register Form
+        $("#register_form").click(function(){
+            $(".social_login").hide();
+            $(".user_register").show();
+            $(".header_title").text('Register');
+            return false;
+        });
+        // Going back to Social Forms
+        $(".back_btn").click(function(){
+            $(".user_login").hide();
+            $(".user_register").hide();
+            $(".social_login").show();
+            $(".header_title").text('Login');
+            return false;
+        });
+    })
 $("body").bind("ajaxSend", function(elm, xhr, s){
-	if (s.type == "POST") {
-		xhr.setRequestHeader('X-CSRF-Token', csrf_token);
-	}
+    if (s.type == "POST") {
+        xhr.setRequestHeader('X-CSRF-Token', csrf_token);
+    }
 });
-
-function getParameterByName(name) {
-    name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
-    var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
-        results = regex.exec(location.search);
-    return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
-}
-
-function showErron(){
-      if (getParameterByName("error") != "") {
-    	  document.getElementById("modal_trigger").click();
-          return;
-      }
-}
 
 
 $('#ff').ajaxForm({
     success: function(response, statusText, xhr, $form)  {
         console.log(response);
-        if(response == null || response.username == null) {
+        if(response == null) {
             alert("authentication failure");
         } else {
-            // response is JSON version of the Spring's Authentication
-            alert("authentication success");
+        	document.open();
+        	document.write(response);
+        	document.close();
         }
     },
     error: function(response, statusText, error, $form)  { 
-        if(response != null && response.message == "authentication-failure") {
-            alert("authentication failure");
+        if(response != null && response.status == 401) {
+            document.getElementById("error_login").textContent = "wrong credentials";
         }
     }
 });
-
 
 // attach handler to form's submit event
 $('#ff').submit(function() {
@@ -215,22 +195,7 @@ function submitForm(){
 	$('#ff').submit();
 }
 
-if(window.attachEvent) {
-    window.attachEvent('onload', showError);
-} else {
-    if(window.onload) {
-        var curronload = window.onload;
-        var newonload = function() {
-            curronload();
-            showErron();
-        };
-        window.onload = newonload;
-    } else {
-        window.onload = showErron;
-    }
-    
-  
-}
+
 
 </script>
 
@@ -261,17 +226,15 @@ if(window.attachEvent) {
          
        
    <c:url var="logoutUrl" value="logout"/>
-	<form action="${logoutUrl}" method="post">
-	  <input class="btn btn-warning" type="submit" value="logout" />
-	  <sec:csrfInput/>
-	</form> 
+    <form action="${logoutUrl}" method="post">
+      <input class="btn btn-warning" type="submit" value="logout" />
+      <sec:csrfInput/>
+    </form> 
+
 
       </div>
-      <div>
-      </div>
+
     </div>
 </body>
-
-
-
 </html>
+
