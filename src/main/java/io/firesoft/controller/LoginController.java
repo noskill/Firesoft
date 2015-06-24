@@ -22,18 +22,20 @@ public class LoginController {
 		return "admin";
 	}
 	
-	/*@RequestMapping(value="login", method=RequestMethod.GET)
+/*	@RequestMapping(value="/#modal", method=RequestMethod.GET)
 	public String login(ModelMap model){
 		System.out.println("In the login method");
 		return "login";
 	}*/
 
-	@RequestMapping(value="/", method=RequestMethod.GET)
+	@RequestMapping(value="/?error", method=RequestMethod.GET)
 	public String loginFailed(ModelMap model){
 		System.out.println("login failed");
 		model.addAttribute("error", "true");
 		return "index";
 	}
+	
+	
 	
 	@RequestMapping(value="loggedout", method=RequestMethod.GET)
 	public String logout(ModelMap model){
