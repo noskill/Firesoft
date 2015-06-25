@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 
-
 @Controller
 public class LoginController {
 	
@@ -28,14 +27,12 @@ public class LoginController {
 		return "login";
 	}*/
 
-	@RequestMapping(value="/?error", method=RequestMethod.GET)
+        @RequestMapping(value="/?error", method=RequestMethod.GET)
 	public String loginFailed(ModelMap model){
 		System.out.println("login failed");
 		model.addAttribute("error", "true");
 		return "index";
 	}
-	
-	
 	
 	@RequestMapping(value="loggedout", method=RequestMethod.GET)
 	public String logout(ModelMap model){

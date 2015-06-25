@@ -6,9 +6,12 @@
 <html lang="en">
 <head>
 <title>Popup Login and Register</title>
- <script src="<c:url value='/resources/js/jquery-1.11.3.js' />"></script>
+ <script src="<c:url value="/resources/js/jquery-2.1.4.min.js" />"></script>
  <script src="<c:url value='/resources/js/jquery.leanModal.min.js' />"></script>
-  <script src="<c:url value='/resources/js/jquery.simplemodal.js' />"></script>
+ <script src="<c:url value='/resources/js/jquery.form.min.js'  />"></script>
+ <script src="<c:url value='/resources/js/jquery.simplemodal.js' />"></script>
+ <script src="resources/js/bootstrap.js"></script>
+                    
 <link href="<c:url value="/resources/css/style.css" />" rel="stylesheet">
 <link href="<c:url value="/resources/css/normalize.css" />" rel="stylesheet">
 <!-- Bootstrap core CSS -->
@@ -19,11 +22,6 @@
 
 </head>
 <body>
-
-   
-    
-
-
     <nav class="navbar navbar-inverse navbar-fixed-top">
       <div class="container">
         <div class="navbar-header">
@@ -135,7 +133,10 @@ function submitForm(){
 
 
 
-				<a href="#" class="forgot_password">Forgot password?</a>
+				   <a href="#" class="forgot_password">Forgot password?</a>
+                
+				   <div class="error" id="error_login"></div>
+
 			</div>
 
 			<!-- Register Form -->
@@ -177,47 +178,68 @@ out.println("ERROR LOGIN");
 </p>
 
 <script type="text/javascript">
-	$("#modal_trigger").leanModal({top : 200, overlay : 0.6, closeButton: ".modal_close" });
+    $("#modal_trigger").leanModal({top : 200, overlay : 0.6, closeButton: ".modal_close" });
+    $(function(){
+        // Calling Login Form
+        $("#login_form").click(function(){
+            $(".social_login").hide();
+            $(".user_login").show();
+            return false;
+        });
+        // Calling Register Form
+        $("#register_form").click(function(){
+            $(".social_login").hide();
+            $(".user_register").show();
+            $(".header_title").text('Register');
+            return false;
+        });
+        // Going back to Social Forms
+        $(".back_btn").click(function(){
+            $(".user_login").hide();
+            $(".user_register").hide();
+            $(".social_login").show();
+            $(".header_title").text('Login');
+            return false;
+        });
+    })
+$("body").bind("ajaxSend", function(elm, xhr, s){
+    if (s.type == "POST") {
+        xhr.setRequestHeader('X-CSRF-Token', csrf_token);
+    }
+});
 
-	$(function(){
-		// Calling Login Form
-		$("#login_form").click(function(){
-			$(".social_login").hide();
-			$(".user_login").show();
-			return false;
-		});
 
-		// Calling Register Form
-		$("#register_form").click(function(){
-			$(".social_login").hide();
-			$(".user_register").show();
-			$(".header_title").text('Register');
-			return false;
-		});
+$('#ff').ajaxForm({
+    success: function(response, statusText, xhr, $form)  {
+        console.log(response);
+        if(response == null) {
+            alert("authentication failure");
+        } else {
+        	document.open();
+        	document.write(response);
+        	document.close();
+        }
+    },
+    error: function(response, statusText, error, $form)  { 
+        if(response != null && response.status == 401) {
+            document.getElementById("error_login").textContent = "wrong credentials";
+        }
+    }
+});
 
-		// Going back to Social Forms
-		$(".back_btn").click(function(){
-			$(".user_login").hide();
-			$(".user_register").hide();
-			$(".social_login").show();
-			$(".header_title").text('Login');
-			return false;
-		});
+// attach handler to form's submit event
+$('#ff').submit(function() {
+    // submit the form
+    $(this).ajaxSubmit();
+    // return false to prevent normal browser submit and page navigation
+    return false;
+});
 
-	})
+
+function submitForm(){
+	$('#ff').submit();
+}
 </script>
-
-
- 
-     
-    
-    <script src="jquery-1.11.3.js">
-    </script>
-    
-    <script src="resources/js/bootstrap.js">
-    </script>
-                   
-                    
  <div class="container">
         <div class="row">
             <div class="col-md-8">
@@ -236,8 +258,6 @@ out.println("ERROR LOGIN");
          Logout ${pageContext.request.remoteUser}
          </a>
          <sec:csrfInput/>-->
-         
-       
                                      <c:url var="logoutUrl" value="logout"/>
                                            <form action="${logoutUrl}" method="post">
                                            <input class="btn btn-warning" type="submit" value="logout" />
@@ -285,14 +305,6 @@ out.println("ERROR LOGIN");
             </div>
         </div>
     </div><!-- /.container -->
-
-	        
-    
-	
-   
-  
- <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
- <script src="resources/js/bootstrap.js"></script>
-
 </body>
 </html>
+
