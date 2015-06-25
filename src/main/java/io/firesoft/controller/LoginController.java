@@ -6,9 +6,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.ModelAndView;
-
 
 
 @Controller
@@ -24,29 +21,17 @@ public class LoginController {
 		return "admin";
 	}
 	
-	/*@RequestMapping(value="login", method=RequestMethod.GET)
+/*	@RequestMapping(value="/#modal", method=RequestMethod.GET)
 	public String login(ModelMap model){
 		System.out.println("In the login method");
 		return "login";
 	}*/
 
-	//Spring Security see this :
-    @RequestMapping(value = "/", method = RequestMethod.GET)
-    public ModelAndView handleRoot(
-        @RequestParam(value = "error", required = false) String error){
-        
+        @RequestMapping(value="/?error", method=RequestMethod.GET)
+	public String loginFailed(ModelMap model){
 		System.out.println("login failed");
-		
-		ModelAndView model = new ModelAndView();
-		if (error != null) {
-            model.addObject("error", "Invalid username and password!");
-        } else {
-            model.addObject("error", "No error");
-        }
-		model.addObject("error", "No error");
-		model.addObject("vasya", "No error");
-		model.setViewName("index");
-		return model;
+		model.addAttribute("error", "true");
+		return "index";
 	}
 	
 	@RequestMapping(value="loggedout", method=RequestMethod.GET)

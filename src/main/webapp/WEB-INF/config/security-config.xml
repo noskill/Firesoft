@@ -19,6 +19,8 @@ xsi:schemaLocation="http://www.springframework.org/schema/beans
   <form-login 
     login-page="/"
     authentication-failure-handler-ref="myAuthenticationFailureHandler"
+    authentication-failure-url="/?error" 
+ 
     username-parameter="username"
     password-parameter="password"/>
     <logout logout-success-url="/"/>
