@@ -1,6 +1,7 @@
 <%@taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
+
     
  <!DOCTYPE html>
 <html lang="en">
@@ -19,6 +20,14 @@
 
     <!-- Custom styles for this template -->
     <link href="resources/css/custom.css" rel="stylesheet">
+    
+  <style>
+   
+   form a:hover {
+   
+    color: #ffe; /* Цвет ссылки */ 
+   } 
+  </style>
 
 </head>
 <body>
@@ -35,8 +44,25 @@
         </div>
         <div id="navbar" class="collapse navbar-collapse">
           <ul class="nav navbar-nav navbar-right">
-            <li class="active"><a href="index.jsp">Home</a></li>
-            <li><a class="btn btn-primary" id="modal_trigger" href="#modal">Login or register</a></li>
+            <li><a href="index.jsp">Home</a></li>
+            <sec:authorize access="! isAuthenticated()">
+            <li><a id="modal_trigger" href="#modal">Login or register</a></li>
+            </sec:authorize>
+            <sec:authorize access="isAuthenticated()">
+            <li>
+                <c:url var="logoutUrl" value="logout"/>
+                      <form style="margin-top: 15px" action="${logoutUrl}" method="post">
+                      
+                   
+                              <a id="logoutBut"
+                             
+                              
+                              style="color:#9d9d9d; text-decoration: none" href="<spring:url value="/logout" />">Logout</a>
+                                 <sec:csrfInput/>
+                     </form> 
+            </li>
+            </sec:authorize>
+           
           </ul>
         </div><!--/.nav-collapse -->
       </div>
@@ -99,6 +125,7 @@ out.println("ERROR LOGIN");
 </p>
 
 
+				<div class="error" id="error_login"></div>
 				
 					<label>Username</label>
 					<input type="text" name='username' value=''/>
@@ -135,7 +162,7 @@ function submitForm(){
 
 				   <a href="#" class="forgot_password">Forgot password?</a>
                 
-				   <div class="error" id="error_login"></div>
+				   
 
 			</div>
 
@@ -249,11 +276,18 @@ function submitForm(){
                                  <div>
                                       <h1> Welcome to Firesoft.io <sec:authentication property="name"/> ! </h1>
                                  </div>
-                                 <a class="btn btn-primary" href="addPost.html">Add new post �</a>
+                                 <sec:authorize access="isAuthenticated()">
+                                 <a class="btn btn-primary" href="addPost.html">Add new post »</a>
+                                 </sec:authorize>
                                      <sec:authorize access="hasRole('ROLE_ADMIN')">
-                                           <a class="btn btn-primary" href="EditPost.html">Edit new post �</a>
+                                           <a class="btn btn-primary" href="EditPost.html">Edit new post »</a>
                                      </sec:authorize>
+                                       
                          </div>
+                         
+                         
+                          
+                                     
       <!--    <a class="btn" href="<spring:url value="/logout" />">
          Logout ${pageContext.request.remoteUser}
          </a>
