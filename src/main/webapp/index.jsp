@@ -12,7 +12,14 @@
  <script src="<c:url value='/resources/js/jquery.form.min.js'  />"></script>
  <script src="<c:url value='/resources/js/jquery.simplemodal.js' />"></script>
  <script src="resources/js/bootstrap.js"></script>
-                    
+           
+ <style>
+ #logoutBut {
+           text-decoration: none;
+           color: #9d9d9d; 
+ }
+ #logoutBut:hover{color: #ffe}
+ </style>         
 <link href="<c:url value="/resources/css/style.css" />" rel="stylesheet">
 <link href="<c:url value="/resources/css/normalize.css" />" rel="stylesheet">
 <!-- Bootstrap core CSS -->
@@ -55,9 +62,8 @@
                       
                    
                               <a id="logoutBut"
-                             
-                              
-                              style="color:#9d9d9d; text-decoration: none" href="<spring:url value="/logout" />">Logout</a>
+                              class="navbar-inverse nav a navbar-nav"
+                              href="<spring:url value="/logout" />">Logout</a>
                                  <sec:csrfInput/>
                      </form> 
             </li>
