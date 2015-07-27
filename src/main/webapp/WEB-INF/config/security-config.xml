@@ -24,16 +24,18 @@ xsi:schemaLocation="http://www.springframework.org/schema/beans
     username-parameter="username"
     password-parameter="password"/>
     <logout logout-success-url="/"/>
+    
 </http>		
 
+
 <authentication-manager>
-	<authentication-provider>
-		<user-service>
-		  <user name="admin" password="admin" authorities="ROLE_ADMIN, ROLE_USER" />
-		  <user name="user" password="user" authorities="ROLE_USER" />
-		</user-service>
-	</authentication-provider>
+    <authentication-provider> 
+    <password-encoder hash="bcrypt" /> 
+    <jdbc-user-service data-source-ref="dataSource"/>  
+     </authentication-provider>   
 </authentication-manager>
+
+
 
 </beans:beans>
 
