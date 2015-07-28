@@ -6,7 +6,12 @@
  <!DOCTYPE html>
 <html lang="en">
 <head>
+
+<meta name="google-signin-client_id" content="46727822461-4ljlensngrf1r741kn9jvlaenrdkf8jk.apps.googleusercontent.com">
+
+
 <title>Popup Login and Register</title>
+ <script src="https://apis.google.com/js/platform.js" async defer></script>
  <script src="<c:url value="/resources/js/jquery-2.1.4.min.js" />"></script>
  <script src="<c:url value='/resources/js/jquery.leanModal.min.js' />"></script>
  <script src="<c:url value='/resources/js/jquery.form.min.js'  />"></script>
@@ -73,6 +78,7 @@
         </div><!--/.nav-collapse -->
       </div>
     </nav>
+     <div class="g-signin2" data-onsuccess="onSignIn"></div>
 	<div id="modal" class="popupContainer" style="display:none;">
 		<header class="popupHeader">
 			<span class="header_title">Login</span>
@@ -80,6 +86,8 @@
 		</header>
 		
 		<section class="popupBody">
+		  
+		   
 			<!-- Social Login -->
 			<div class="social_login">
 				<div class="">
@@ -290,19 +298,11 @@ function submitForm(){
                                      </sec:authorize>
                                        
                          </div>
-                         
-                         
-                          
-                                     
-      <!--    <a class="btn" href="<spring:url value="/logout" />">
-         Logout ${pageContext.request.remoteUser}
-         </a>
-         <sec:csrfInput/>-->
-                                     <c:url var="logoutUrl" value="logout"/>
-                                           <form action="${logoutUrl}" method="post">
-                                           <input class="btn btn-warning" type="submit" value="logout" />
-                                               <sec:csrfInput/>
-                                           </form> 
+                         <c:url var="logoutUrl" value="logout"/>
+                               <form action="${logoutUrl}" method="post">
+                               <input class="btn btn-warning" type="submit" value="logout" />
+                                   <sec:csrfInput/>
+                               </form> 
                         <div class="clearfix"></div>
                         <hr>
                         <ul id="topics">
