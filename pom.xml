@@ -9,6 +9,33 @@
   <url>http://maven.apache.org</url>
   <dependencies>
   
+  <dependency>
+	<groupId>org.apache.tiles</groupId>
+	<artifactId>tiles-core</artifactId>
+	<version>3.0.5</version>
+</dependency>
+  
+  <dependency>
+	<groupId>org.apache.tiles</groupId>
+	<artifactId>tiles-jsp</artifactId>
+	<version>3.0.5</version>
+</dependency>
+  
+  <dependency>
+	<groupId>org.apache.tiles</groupId>
+	<artifactId>tiles-el</artifactId>
+	<version>3.0.5</version>
+</dependency>
+  
+  
+  
+  <dependency>
+	<groupId>org.springframework.data</groupId>
+	<artifactId>spring-data-jpa</artifactId>
+	<version>1.8.1.RELEASE</version>
+</dependency>
+  
+  
 	<dependency>
 		<groupId>net.sf.flexjson</groupId>
 		<artifactId>flexjson</artifactId>
@@ -113,6 +140,12 @@
     	<version>1.2</version>
     	<scope>provided</scope>
     </dependency>
+    
+    <dependency>
+			<groupId>jstl</groupId>
+			<artifactId>jstl</artifactId>
+			<version>1.2</version>
+		</dependency>
    
    <dependency>
 	<groupId>javax.servlet</groupId>
@@ -132,6 +165,30 @@
 	<artifactId>javax.servlet.jsp.jstl-api</artifactId>
 	<version>1.2.1</version>
 </dependency>
+
+		<!-- Core utilities used by other modules. Define this if you use Spring 
+			Utility APIs (org.springframework.core.*/org.springframework.util.*) -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-core</artifactId>
+			<version>4.1.6.RELEASE</version>
+		</dependency>
+
+		<!-- Expression Language (depends on spring-core) Define this if you use 
+			Spring Expression APIs (org.springframework.expression.*) -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-expression</artifactId>
+			<version>4.1.6.RELEASE</version>
+		</dependency>
+
+		<!-- Bean Factory and JavaBeans utilities (depends on spring-core) Define 
+			this if you use Spring Bean APIs (org.springframework.beans.*) -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-beans</artifactId>
+			<version>4.1.6.RELEASE</version>
+		</dependency>
 
 
 <dependency>
@@ -179,6 +236,11 @@
   <build>
    <finalName>Firesoftblog</finalName>
     <plugins>
+        <plugin>
+				<groupId>org.apache.tomcat.maven</groupId>
+				<artifactId>tomcat7-maven-plugin</artifactId>
+				<version>2.2</version>
+			</plugin>
         <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-compiler-plugin</artifactId>

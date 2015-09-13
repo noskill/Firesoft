@@ -3,13 +3,15 @@
     
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
-<script type="text/javascript" src="jquery-1.11.3.js"></script>
+ <script src="<c:url value="/resources/js/jquery-2.1.4.min.js" />"></script>
+ <script src="<c:url value="/resources/js/tinymce/tinymce.min.js" />"></script>
+
 <script type="text/javascript">
  $(document).ready(
 		 function(){
@@ -29,6 +31,7 @@
 	  
 </script>
 <style type="text/css">
+
 
 .error {
 color: #ff0000;
@@ -101,7 +104,8 @@ Language:
      </tr>
      <tr>
         <td><spring:message code="post.cont" /></td>
-        <td><form:textarea path="content" />
+        <td><form:textarea path="content"/>
+        
         <td><form:errors path="content" cssClass="error"/></td>
     </tr>
      <tr>
@@ -114,6 +118,19 @@ Language:
     
  </table>
 </form:form>
+
+<script type="text/javascript">
+tinymce.init({
+    selector: "textarea",
+    plugins: [
+        "advlist autolink lists link image charmap print preview anchor",
+        "searchreplace visualblocks code fullscreen",
+        "insertdatetime media table contextmenu paste"
+    ],
+    file_browser_callback : elFinderBrowser,
+    toolbar: "insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image"
+});
+</script>
 
 
 </body>
