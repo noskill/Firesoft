@@ -4,17 +4,24 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
  <script src="<c:url value="/resources/js/jquery-2.1.4.min.js" />"></script>
- <script src="<c:url value="/resources/js/tinymce/tinymce.min.js" />"></script>
+ 
+  <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.min.css">
+ 
+ 
+  
 
 <script type="text/javascript">
  $(document).ready(
 		 function(){
+			 
 			 $.getJSON('<spring:url value="themes.json"/>', {
 				 ajax : 'true'
 			 }, function(data){
@@ -59,6 +66,7 @@ body {
     width: 900px;
     padding: 0 30px;
     margin: auto;
+    text-align: center;
 }
 
 .blank_row
@@ -66,6 +74,7 @@ body {
     height: 20px ;
     
 }
+
 
  </style>
 </head>
@@ -80,57 +89,41 @@ Language:
         Russian
       </a>
       <br>
-      <hr>
+      <br />
+
+ 
 <form:form commandName="post">
   <form:errors path="*" cssClass="errorblock" element="div" />
- <table>
-     <tr>
-     <td ></td>
-      <td> 
-           
            <form:select id="themes" path="themes"></form:select>
-        
-        </td>
-        
-        </tr>
-        <tr>
-        <td><spring:message code="post.text" /></td>
-        <td><form:input path="title"/></td>
-        <td><form:errors path="title" cssClass="error"/></td>
+           <br />
+           <br />
+           
+            <spring:message code="post.text" />
+            <br />
+            <form:input path="title"/>
+            <form:errors path="title" cssClass="error" element="div"/>
        
-    </tr>
-     <tr class="blank_row">
-        <td colspan="3"></td>
-     </tr>
-     <tr>
-        <td><spring:message code="post.cont" /></td>
-        <td><form:textarea path="content"/>
-        
-        <td><form:errors path="content" cssClass="error"/></td>
-    </tr>
-     <tr>
-        <td></td>
-        <td style="text-align: center">
-        <input type="submit" value="Create" />
-        </td>
-        <td></td>
-    </tr>
     
- </table>
+ <br /> <br />
+ 
+        <spring:message code="post.cont" />
+        <br />
+         <form:textarea  path="content"/> 
+        <form:errors path="content" cssClass="error" element="div"/>
+       
+        <br />
+
+       <center> <input type="submit" value="Create" /> </center>
+       <div>
+          
+       </div>
 </form:form>
 
-<script type="text/javascript">
-tinymce.init({
-    selector: "textarea",
-    plugins: [
-        "advlist autolink lists link image charmap print preview anchor",
-        "searchreplace visualblocks code fullscreen",
-        "insertdatetime media table contextmenu paste"
-    ],
-    file_browser_callback : elFinderBrowser,
-    toolbar: "insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image"
-});
-</script>
+
+ 
+  
+
+
 
 
 </body>
