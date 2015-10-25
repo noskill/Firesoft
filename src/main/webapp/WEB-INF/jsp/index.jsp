@@ -7,20 +7,32 @@
 
 
 <head>
- <script src="<c:url value="/resources/js/jquery-2.1.4.min.js" />"></script>
+ <script src="<c:url value='/resources/js/jquery-2.1.4.min.js' />"></script>
  <script src="<c:url value='/resources/js/jquery.leanModal.min.js' />"></script>
  <script src="<c:url value='/resources/js/jquery.form.min.js'  />"></script>
  <script src="<c:url value='/resources/js/jquery.simplemodal.js' />"></script>
  <script src="resources/js/bootstrap.js"></script>
- 
+<link type=text/css rel=stylesheet href="//www.gstatic.com/authtoolkit/css/gitkit.css" />
+
+<script type="text/javascript" src="//www.gstatic.com/authtoolkit/js/gitkit.js"></script>
+	<script type=text/javascript>
+	  window.google.identitytoolkit.signInButton(
+	    '#navbarff', // accepts any CSS selector
+	    {
+	      widgetUrl: "http://localhost:8080/Firesoftblog/oauth2callback",
+	      signOutUrl: "http://localhost:8080/Firesoftblog/oauth2logout",
+	      popupMode: true
+	    }
+	  );
+	</script>
+     
  <style>
-#logoutBut {
-          text-decoration: none;
-         color: #9d9d9d; 
-}
-#logoutBut:hover{color: #ffe}
-</style> 
-                    
+ #logoutBut {
+           text-decoration: none;
+           color: #9d9d9d; 
+ }
+ #logoutBut:hover{color: #ffe}
+</style>         
 <link href="<c:url value="/resources/css/style.css" />" rel="stylesheet">
 <link href="<c:url value="/resources/css/normalize.css" />" rel="stylesheet">
 <!-- Bootstrap core CSS -->
@@ -75,6 +87,8 @@
 		</header>
 		
 		<section class="popupBody">
+		  
+		   
 			<!-- Social Login -->
 			<div class="social_login">
 				<div class="">
@@ -84,7 +98,7 @@
 						
 					</a>
 
-					<a href="#" class="social_box google">
+					<a href="#"  id="navbarff" class="social_box google">
 						<span class="icon"><i class="fa fa-google-plus"></i></span>
 						<span class="icon_title">Connect with Google</span>
 					</a>
@@ -159,12 +173,8 @@ function submitForm(){
 }
 </script>
 
-
-
-				   <a href="#" class="forgot_password">Forgot password?</a>
+		   <a href="#" class="forgot_password">Forgot password?</a>
                 
-				   
-
 			</div>
 
 			<!-- Register Form -->
@@ -285,7 +295,6 @@ function submitForm(){
                                      </sec:authorize>
                                        
                          </div>
-                         
        
                                      
       <!--    <a class="btn" href="<spring:url value="/logout" />">
