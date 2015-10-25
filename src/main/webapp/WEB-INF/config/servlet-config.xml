@@ -9,39 +9,41 @@
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
 
 <mvc:annotation-driven />
- <mvc:resources mapping="/resources/**" location="resources" />
+<mvc:resources mapping="/resources/**" location="/resources/" />
+
+
 <context:component-scan base-package="io.firesoft.controller" />
 
-	<bean class="org.springframework.web.servlet.view.ContentNegotiatingViewResolver">
-		<property name="order" value="1" />
-		<property name="contentNegotiationManager">
-			<bean class="org.springframework.web.accept.ContentNegotiationManager">
+<bean class="org.springframework.web.servlet.view.ContentNegotiatingViewResolver">
+	<property name="order" value="1" />
+	<property name="contentNegotiationManager">
+		<bean class="org.springframework.web.accept.ContentNegotiationManager">
+			<constructor-arg>
+				<bean class="org.springframework.web.accept.PathExtensionContentNegotiationStrategy">
+					<constructor-arg>
+						<map>
+							<entry key="json" value="application/json" />
+							<entry key="xml" value="application/xml" />
+						</map>
+					</constructor-arg>
+				</bean>
+			</constructor-arg>
+		</bean>
+	</property>
+	
+	<property name="defaultViews">
+		<list>
+			<bean class="org.springframework.web.servlet.view.json.MappingJackson2JsonView" />
+			<bean class="org.springframework.web.servlet.view.xml.MarshallingView">
 				<constructor-arg>
-					<bean class="org.springframework.web.accept.PathExtensionContentNegotiationStrategy">
-						<constructor-arg>
-							<map>
-								<entry key="json" value="application/json" />
-								<entry key="xml" value="application/xml" />
-							</map>
-						</constructor-arg>
+					<bean class="org.springframework.oxm.xstream.XStreamMarshaller">
+						<property name="autodetectAnnotations" value="true" />
 					</bean>
 				</constructor-arg>
 			</bean>
-		</property>
-		
-		<property name="defaultViews">
-			<list>
-				<bean class="org.springframework.web.servlet.view.json.MappingJackson2JsonView" />
-				<bean class="org.springframework.web.servlet.view.xml.MarshallingView">
-					<constructor-arg>
-						<bean class="org.springframework.oxm.xstream.XStreamMarshaller">
-							<property name="autodetectAnnotations" value="true" />
-						</bean>
-					</constructor-arg>
-				</bean>
-			</list>
-		</property>
-	</bean>
+		</list>
+	</property>
+</bean>
     
 
 <mvc:interceptors>
@@ -54,13 +56,7 @@
 <bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource"
  p:basename="messages"></bean>
 
-<!-- 
 
-<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-    <property name="prefix" value="WEB-INF/jsp/" />
-    <property name="suffix" value=".jsp" />
-</bean>
--->
 
 <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver"
  p:prefix="/WEB-INF/jsp/" p:suffix=".jsp" p:order="2"/>

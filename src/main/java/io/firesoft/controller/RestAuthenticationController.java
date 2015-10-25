@@ -36,7 +36,6 @@ public class RestAuthenticationController {
     @RequestMapping(value="/default-target", method = RequestMethod.GET)
     public ResponseEntity<String> apiDefaultTarget() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        // exclude/include whatever fields you need
         String userJson = new JSONSerializer().exclude("*.class", "*.password").serialize(authentication);
         return new ResponseEntity<String>(userJson, getJsonHeaders(), HttpStatus.OK);
     }

@@ -7,17 +7,29 @@
 <html lang="en">
 <head>
 
-<meta name="google-signin-client_id" content="46727822461-4ljlensngrf1r741kn9jvlaenrdkf8jk.apps.googleusercontent.com">
 
 
 <title>Popup Login and Register</title>
- <script src="https://apis.google.com/js/platform.js" async defer></script>
+
  <script src="<c:url value="/resources/js/jquery-2.1.4.min.js" />"></script>
  <script src="<c:url value='/resources/js/jquery.leanModal.min.js' />"></script>
  <script src="<c:url value='/resources/js/jquery.form.min.js'  />"></script>
  <script src="<c:url value='/resources/js/jquery.simplemodal.js' />"></script>
  <script src="resources/js/bootstrap.js"></script>
-           
+<link type=text/css rel=stylesheet href="//www.gstatic.com/authtoolkit/css/gitkit.css" />
+
+<script type="text/javascript" src="//www.gstatic.com/authtoolkit/js/gitkit.js"></script>
+	<script type=text/javascript>
+	  window.google.identitytoolkit.signInButton(
+	    '#navbarff', // accepts any CSS selector
+	    {
+	      widgetUrl: "http://localhost:8080/Firesoftblog/oauth2callback",
+	      signOutUrl: "http://localhost:8080/Firesoftblog/oauth2logout",
+	      popupMode: true
+	    }
+	  );
+	</script>
+     
  <style>
  #logoutBut {
            text-decoration: none;
@@ -78,7 +90,7 @@
         </div><!--/.nav-collapse -->
       </div>
     </nav>
-     <div class="g-signin2" data-onsuccess="onSignIn"></div>
+
 	<div id="modal" class="popupContainer" style="display:none;">
 		<header class="popupHeader">
 			<span class="header_title">Login</span>
@@ -97,7 +109,7 @@
 						
 					</a>
 
-					<a href="#" class="social_box google">
+					<a href="#"  id="navbarff" class="social_box google">
 						<span class="icon"><i class="fa fa-google-plus"></i></span>
 						<span class="icon_title">Connect with Google</span>
 					</a>
