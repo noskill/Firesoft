@@ -247,13 +247,13 @@ function toUriEncoded(params){
 function sendFormData() {
 	let formData = {"themes":  document.getElementById("themes").value,
 			        "title": document.getElementById("title").value,
-	                "_csrf": document.getElementsByName('_csrf')[0].value,
+	                //"_csrf": document.getElementsByName('_csrf')[0].value,
 	                "content": document.getElementById("editor").innerHTML}
 
 
 
 	var request = new XMLHttpRequest();
-	request.open("POST", "http://localhost:8080/Firesoftblog/addPost.html");
+	request.open("POST", "http://localhost:3880/Firesoftblog/addPost.html");
 	request.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 	request.send(toUriEncoded(formData));
 }
