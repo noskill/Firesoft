@@ -1,9 +1,14 @@
 package io.firesoft.model;
 
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -12,14 +17,33 @@ public class User {
 	@Id
 	@GeneratedValue
 	@Column(name="user_id")
-	private int id;
+	private Integer id;
+	public List<Post> getPosts() {
+		return posts;
+	}
+
+	public void setPosts(List<Post> posts) {
+		this.posts = posts;
+	}
 	private String fullName;
 	private String email;
 	private String password;
-	public void setAdmin(boolean isAdmin) {
-		this.isAdmin = isAdmin;
+	@ManyToMany
+	@JoinTable
+	private List<Role> roles;
+	
+	@OneToMany(mappedBy="user")
+	private List<Post> posts;
+	
+	
+	public List<Role> getRoles() {
+		return roles;
 	}
-	private boolean isAdmin;
+
+	public void setRoles(List<Role> roles) {
+		this.roles = roles;
+	}
+
 	
 	
 	
@@ -33,10 +57,10 @@ public class User {
 	
 	}
 	
-	public int getId() {
+	public Integer getId() {
 		return id;
 	}
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 	public String getFullName() {
@@ -57,11 +81,7 @@ public class User {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	public boolean getIsAdmin() {
-		return isAdmin;
-	}
-	public void setIsAdmin(boolean isAdmin) {
-		this.isAdmin = isAdmin;
-	}
+
+	
 
 }

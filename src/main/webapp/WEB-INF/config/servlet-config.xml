@@ -5,7 +5,7 @@
 	xmlns:mvc="http://www.springframework.org/schema/mvc"
 	xmlns:p="http://www.springframework.org/schema/p"
 	xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd
-		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.1.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
 
 <mvc:annotation-driven />
@@ -13,28 +13,23 @@
 
 
 <context:component-scan base-package="io.firesoft.controller" />
+<bean id="tilesConfigurer" class="org.springframework.web.servlet.view.tiles3.TilesConfigurer">
+    <property name="definitions">
+        <list>
+            <value>/WEB-INF/defs/general.xml</value>
+        </list>
+    </property>
+</bean>
 
-<bean class="org.springframework.web.servlet.view.ContentNegotiatingViewResolver">
-	<property name="order" value="1" />
-	<property name="contentNegotiationManager">
-		<bean class="org.springframework.web.accept.ContentNegotiationManager">
-			<constructor-arg>
-				<bean class="org.springframework.web.accept.PathExtensionContentNegotiationStrategy">
-					<constructor-arg>
-						<map>
-							<entry key="json" value="application/json" />
-							<entry key="xml" value="application/xml" />
-						</map>
-					</constructor-arg>
-				</bean>
-			</constructor-arg>
-		</bean>
-	</property>
-	
-	<property name="defaultViews">
-		<list>
-			<bean class="org.springframework.web.servlet.view.json.MappingJackson2JsonView" />
-			<bean class="org.springframework.web.servlet.view.xml.MarshallingView">
+<bean id="viewResolver" class="org.springframework.web.servlet.view.UrlBasedViewResolver">
+    <property name="viewClass" value="org.springframework.web.servlet.view.tiles3.TilesView"/>
+    <property name="order" value="1"></property>
+</bean>
+
+	<bean class="org.springframework.web.servlet.view.ContentNegotiatingViewResolver">
+		<property name="order" value="1" />
+		<property name="contentNegotiationManager">
+			<bean class="org.springframework.web.accept.ContentNegotiationManager">
 				<constructor-arg>
 					<bean class="org.springframework.oxm.xstream.XStreamMarshaller">
 						<property name="autodetectAnnotations" value="true" />

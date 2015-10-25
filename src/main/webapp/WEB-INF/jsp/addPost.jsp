@@ -3,6 +3,8 @@
     
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -15,18 +17,20 @@
     <link href="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/css/bootstrap-responsive.min.css" rel="stylesheet">
     <link href="http://netdna.bootstrapcdn.com/font-awesome/3.0.2/css/font-awesome.css" rel="stylesheet">
     
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
+ <script src="<c:url value="/resources/js/jquery-2.1.4.min.js" />"></script>
 <script src="resources/js/jquery.hotkeys.js"></script>
 <script src="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/js/bootstrap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/prettify/r298/prettify.js"></script>
 <link type=text/css rel=stylesheet href="resources/css/index.css" />
 <script src="resources/js/bootstrap-wysiwyg.js"></script>
-
-
+  <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.min.css">
+ 
+ 
 
 <script type="text/javascript">
  $(document).ready(
 		 function(){
+			 
 			 $.getJSON('<spring:url value="themes.json"/>', {
 				 ajax : 'true'
 			 }, function(data){
@@ -45,6 +49,7 @@
 </script>
 
 <style type="text/css">
+
 
 .error {
 color: #ff0000;
@@ -74,6 +79,7 @@ body {
     width: 900px;
     padding: 0 30px;
     margin: auto;
+    text-align: center;
 }
 
 .blank_row
@@ -81,6 +87,7 @@ body {
     height: 20px ;
     
 }
+
 
  </style>
 </head>
@@ -95,42 +102,34 @@ Language:
         Russian
       </a>
       <br>
-      <hr>
+      <br />
+
+ 
 <form:form commandName="post">
   <form:errors path="*" cssClass="errorblock" element="div" />
- <table>
-     <tr>
-     <td ></td>
-      <td> 
-           
            <form:select id="themes" path="themes"></form:select>
-        
-        </td>
-        
-        </tr>
-        <tr>
-        <td><spring:message code="post.text" /></td>
-        <td><form:input path="title"/></td>
-        <td><form:errors path="title" cssClass="error"/></td>
+           <br />
+           <br />
+           
+            <spring:message code="post.text" />
+            <br />
+            <form:input path="title"/>
+            <form:errors path="title" cssClass="error" element="div"/>
        
-    </tr>
-     <tr class="blank_row">
-        <td colspan="3"></td>
-     </tr>
-     <tr>
-        <td><spring:message code="post.cont" /></td>
-        <td><form:textarea path="content" />
-        <td><form:errors path="content" cssClass="error"/></td>
-    </tr>
-     <tr>
-        <td></td>
-        <td style="text-align: center">
-        <input type="submit" value="Create" />
-        </td>
-        <td></td>
-    </tr>
     
- </table>
+ <br /> <br />
+ 
+        <spring:message code="post.cont" />
+        <br />
+         <form:textarea  path="content"/> 
+        <form:errors path="content" cssClass="error" element="div"/>
+       
+        <br />
+
+       <center> <input type="submit" value="Create" /> </center>
+       <div>
+          
+       </div>
 </form:form>
 
     <div class="btn-toolbar" data-role="editor-toolbar" data-target="#editor">
@@ -261,6 +260,12 @@ function sendFormData() {
 </script>
 
 <button type="button" onclick="sendFormData()">Click Me!</button>
+
+ 
+  
+
+
+
 
 </body>
 </html>

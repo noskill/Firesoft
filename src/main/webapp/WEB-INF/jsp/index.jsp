@@ -1,17 +1,13 @@
 <%@taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
+<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"  %>
 
     
- <!DOCTYPE html>
-<html lang="en">
+
+
 <head>
-
-
-
-<title>Popup Login and Register</title>
-
- <script src="<c:url value="/resources/js/jquery-2.1.4.min.js" />"></script>
+ <script src="<c:url value='/resources/js/jquery-2.1.4.min.js' />"></script>
  <script src="<c:url value='/resources/js/jquery.leanModal.min.js' />"></script>
  <script src="<c:url value='/resources/js/jquery.form.min.js'  />"></script>
  <script src="<c:url value='/resources/js/jquery.simplemodal.js' />"></script>
@@ -36,7 +32,7 @@
            color: #9d9d9d; 
  }
  #logoutBut:hover{color: #ffe}
- </style>         
+</style>         
 <link href="<c:url value="/resources/css/style.css" />" rel="stylesheet">
 <link href="<c:url value="/resources/css/normalize.css" />" rel="stylesheet">
 <!-- Bootstrap core CSS -->
@@ -45,17 +41,11 @@
     <!-- Custom styles for this template -->
     <link href="resources/css/custom.css" rel="stylesheet">
     
-  <style>
-   
-   form a:hover {
-   
-    color: #ffe; /* Цвет ссылки */ 
-   } 
-  </style>
+ 
 
 </head>
 <body>
-    <nav class="navbar navbar-inverse navbar-fixed-top">
+  <!--   <nav class="navbar navbar-inverse navbar-fixed-top">
       <div class="container">
         <div class="navbar-header">
           <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
@@ -69,28 +59,27 @@
         <div id="navbar" class="collapse navbar-collapse">
           <ul class="nav navbar-nav navbar-right">
             <li><a href="index.jsp">Home</a></li>
+            <li><a href='<spring:url value="/users.html" />'>Users</a></li>
             <sec:authorize access="! isAuthenticated()">
             <li><a id="modal_trigger" href="#modal">Login or register</a></li>
+            </sec:authorize>
+             <sec:authorize access="! isAuthenticated()">
+            <li><a id="modal_trigger" href="#modal">register</a></li>
             </sec:authorize>
             <sec:authorize access="isAuthenticated()">
             <li>
                 <c:url var="logoutUrl" value="logout"/>
                       <form style="margin-top: 15px" action="${logoutUrl}" method="post">
-                      
-                   
-                              <a id="logoutBut"
-                              class="navbar-inverse nav a navbar-nav"
-                              href="<spring:url value="/logout" />">Logout</a>
-                                 <sec:csrfInput/>
+                           <a id="logoutBut" class="navbar-inverse nav a navbar-nav"  href="<spring:url value="/logout" />">Logout</a>
+                           <sec:csrfInput/>
                      </form> 
             </li>
             </sec:authorize>
            
           </ul>
-        </div><!--/.nav-collapse -->
+        </div>
       </div>
-    </nav>
-
+    </nav> --> 
 	<div id="modal" class="popupContainer" style="display:none;">
 		<header class="popupHeader">
 			<span class="header_title">Login</span>
@@ -184,17 +173,13 @@ function submitForm(){
 }
 </script>
 
-
-
-				   <a href="#" class="forgot_password">Forgot password?</a>
+		   <a href="#" class="forgot_password">Forgot password?</a>
                 
-				   
-
 			</div>
 
 			<!-- Register Form -->
 			<div class="user_register">
-				<form>
+				<form:form>
 					<label>Full Name</label>
 					<input type="text" />
 					<br />
@@ -216,7 +201,7 @@ function submitForm(){
 						<div class="one_half"><a href="#" class="btn back_btn"><i class="fa fa-angle-double-left"></i> Back</a></div>
 						<div class="one_half last"><a href="#" class="btn btn_red">Register</a></div>
 					</div>
-				</form>
+				</form:form>
 			</div>
 		</section>
 	</div>
@@ -303,18 +288,24 @@ function submitForm(){
                                       <h1> Welcome to Firesoft.io <sec:authentication property="name"/> ! </h1>
                                  </div>
                                  <sec:authorize access="isAuthenticated()">
-                                 <a class="btn btn-primary" href="addPost.html">Add new post »</a>
+                                 <a class="btn btn-primary" href="addPost.html">Add new post �</a>
                                  </sec:authorize>
                                      <sec:authorize access="hasRole('ROLE_ADMIN')">
                                            <a class="btn btn-primary" href="EditPost.html">Edit new post »</a>
                                      </sec:authorize>
                                        
                          </div>
-                         <c:url var="logoutUrl" value="logout"/>
-                               <form action="${logoutUrl}" method="post">
-                               <input class="btn btn-warning" type="submit" value="logout" />
-                                   <sec:csrfInput/>
-                               </form> 
+       
+                                     
+      <!--    <a class="btn" href="<spring:url value="/logout" />">
+         Logout ${pageContext.request.remoteUser}
+         </a>
+         <sec:csrfInput/>-->
+                                     <c:url var="logoutUrl" value="logout"/>
+                                           <form action="${logoutUrl}" method="post">
+                                           <input class="btn btn-warning" type="submit" value="logout" />
+                                               <sec:csrfInput/>
+                                           </form> 
                         <div class="clearfix"></div>
                         <hr>
                         <ul id="topics">
