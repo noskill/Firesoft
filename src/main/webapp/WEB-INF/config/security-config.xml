@@ -15,7 +15,7 @@ xsi:schemaLocation="http://www.springframework.org/schema/beans
     <intercept-url pattern="/user.html" access="hasRole('ROLE_USER')"/>    
     <intercept-url pattern="/admin.html" access="hasRole('ROLE_ADMIN')"/>
     <intercept-url pattern="/addPost.html" access="hasRole('ROLE_USER')"/>
-  
+    <intercept-url pattern="/upload" access="hasRole('ROLE_USER')"/>
   <form-login 
     login-page="/"
     authentication-failure-handler-ref="myAuthenticationFailureHandler"

@@ -2,6 +2,8 @@ package io.firesoft.service;
 
 
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,6 +21,12 @@ public class PostServiceImpl implements PostService {
 	public Post save(Post post) {
 		
 		return postRepository.save(post);
+	}
+
+	@Override
+	public List<Post> findAllPosts() {
+		return postRepository.loadAll();
+	
 	}
 
 }

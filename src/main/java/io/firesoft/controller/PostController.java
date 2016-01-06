@@ -49,6 +49,8 @@ public class PostController {
 		System.out.println("post content: "+post.getContent());
 		System.out.println("Theme of post is: "+post.getThemes());
 		
+		
+		
 		if (result.hasErrors()){
 			return "addPost";
 		}
@@ -70,5 +72,11 @@ public class PostController {
 	}
 
 
+	@RequestMapping(value = "index", method = RequestMethod.GET)
+	public String getPosts (Model model){
+		List<Post> posts = postService.findAllPosts();
+		model.addAttribute("posts",posts);
+		return "index";
+	}
 
 }

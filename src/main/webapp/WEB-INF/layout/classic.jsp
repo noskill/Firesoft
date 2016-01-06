@@ -51,6 +51,9 @@
              <sec:authorize access="isAuthenticated()">
             <li><a href='<spring:url value="/users.html" />'>Users</a></li>
             </sec:authorize>
+             <sec:authorize access="isAuthenticated()">
+            <li><a href='<spring:url value="/addPost.html" />'>Add post</a></li>
+            </sec:authorize>
             <sec:authorize access="! isAuthenticated()">
             <li><a id="modal_trigger" href="#modal">Login or register</a></li>
             </sec:authorize>

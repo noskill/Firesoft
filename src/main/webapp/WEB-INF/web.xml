@@ -50,6 +50,10 @@
     <url-pattern>*.html</url-pattern>
 </servlet-mapping>
 
+<servlet-mapping>
+    <servlet-name>fireSoftServlet</servlet-name>
+    <url-pattern>/upload-ajax</url-pattern>
+</servlet-mapping>
 
 <servlet-mapping>
     <servlet-name>fireSoftServlet</servlet-name>
@@ -60,6 +64,22 @@
 <servlet-mapping>
     <servlet-name>fireSoftServlet</servlet-name>
     <url-pattern>*.json</url-pattern>
+</servlet-mapping>
+
+<servlet>
+	<servlet-name>ConnectorServlet</servlet-name>
+	<servlet-class>com.ckfinder.connector.ConnectorServlet</servlet-class>
+	<init-param>
+		<param-name>XMLConfig</param-name>
+		<param-value>/WEB-INF/config.xml</param-value>
+	</init-param>
+	<load-on-startup>1</load-on-startup>
+</servlet>
+<servlet-mapping>
+	<servlet-name>ConnectorServlet</servlet-name>
+	<url-pattern>
+		/ckfinder/core/connector/java/connector.java
+	</url-pattern>
 </servlet-mapping>
 
 

@@ -4,6 +4,7 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib uri="http://ckeditor.com" prefix="ckeditor" %>
 
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -12,10 +13,8 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
  <script src="<c:url value="/resources/js/jquery-2.1.4.min.js" />"></script>
- 
+ <script src="<c:url value="/ckeditor/ckeditor.js" />"></script>
   <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.min.css">
- 
- 
   
 
 <script type="text/javascript">
@@ -55,7 +54,7 @@ margin: 16px;
 }  
   label { padding: 0; marign: 0; display: block; }
   #themes {width: 30em; height: 2em; margin-bottom: 20px}
-  textarea { width:60em; height: 40em; border: 1px solid #333; padding: 4px; }
+  textarea { width:60em; height: 40em; border: 1px solid #333; padding: 4px}
   #title {width: 60em; border: 1px solid #333; padding: 4px;top-margin:10px}
   html, body {
     background: #eeeeee !important;
@@ -79,7 +78,7 @@ body {
  </style>
 </head>
 <body>
-<h1>Create Post</h1>
+<h1 style="margin-top:100px">Create Post</h1>
 
 Language: 
    <a href="?language=en">
@@ -108,22 +107,25 @@ Language:
  
         <spring:message code="post.cont" />
         <br />
-         <form:textarea  path="content"/> 
+         <form:textarea id='edit' path="content"/> 
+        
         <form:errors path="content" cssClass="error" element="div"/>
        
         <br />
 
-       <center> <input type="submit" value="Create" /> </center>
+       <center> <input id="submit" type="submit" value="Create" /> </center>
        <div>
           
        </div>
+       
+       
 </form:form>
 
+<ckeditor:replace replace='edit' basePath="/Firesoftblog/ckeditor/" />
 
- 
+
+
   
-
-
 
 
 </body>

@@ -10,6 +10,7 @@
 
 <mvc:annotation-driven />
  <mvc:resources mapping="/resources/**" location="resources" />
+
 <context:component-scan base-package="io.firesoft.controller" />
 
 
@@ -76,12 +77,19 @@
 </bean>
 -->
 
+
+<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+     <property name="maxUploadSize" value="100000000"/>
+</bean>
+
 <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver"
  p:prefix="/WEB-INF/jsp/" p:suffix=".jsp" p:order="2"/>
  
+
+ 
  <bean class="org.springframework.web.servlet.view.BeanNameViewResolver" p:order="0"></bean>
     
-    <import resource="classpath:jpaContext.xml"/>
+   <import resource="classpath:jpaContext.xml"/>
    <import resource="/security-config.xml"/>
    
 </beans>

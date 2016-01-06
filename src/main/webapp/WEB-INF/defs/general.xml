@@ -21,4 +21,11 @@
     <put-attribute name="body" value="/WEB-INF/jsp/users.jsp" />
     
   </definition>
+  
+   <definition name="addPost" extends="common">
+    <put-attribute name="title" value="Add new post" />
+
+    <put-attribute name="body" value="/WEB-INF/jsp/addPost.jsp" />
+    
+  </definition>
 </tiles-definitions>
