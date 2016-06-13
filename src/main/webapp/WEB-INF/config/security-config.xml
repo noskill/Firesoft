@@ -8,7 +8,7 @@ xsi:schemaLocation="http://www.springframework.org/schema/beans
 		   http://www.springframework.org/schema/security/spring-security.xsd">
  
 <beans:bean id="myAuthenticationFailureHandler"
-        class="io.firesoft.controller.CustomAuthenticationFailureHandler" />
+        class="io.firesoft.controller.myAuthenticationFailureHandler" />
 
 
 <http use-expressions="true">
@@ -24,7 +24,7 @@ xsi:schemaLocation="http://www.springframework.org/schema/beans
     username-parameter="username"
     password-parameter="password"/>
     <logout logout-success-url="/"/>
-    <csrf disabled="true"/>
+    <csrf disabled="false"/>
     
 </http>		
 

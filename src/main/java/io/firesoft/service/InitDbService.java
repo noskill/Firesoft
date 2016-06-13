@@ -46,14 +46,6 @@ public class InitDbService {
 		roles.add(roleUser);
 		userAdmin.setRoles(roles);
 		userRepository.save(userAdmin);
-		
-		
-		
-		
-		
-		
-	
-		
 	}
 
 }

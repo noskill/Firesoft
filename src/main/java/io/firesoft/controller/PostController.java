@@ -39,8 +39,6 @@ public class PostController {
 		return "addPost";
 	}
 	
-	
-	
 	@RequestMapping(value="addPost", method = RequestMethod.POST)
 	public String updatePost(@Valid @ModelAttribute("post") Post post, BindingResult result){
 		
@@ -61,8 +59,6 @@ public class PostController {
 		return "redirect:/";
 	}
 	
-	
-	
 	@RequestMapping(value = "/themes", method = RequestMethod.GET)
 	public @ResponseBody List<Themes> findALLThemes() {
 	
@@ -70,7 +66,6 @@ public class PostController {
 		return themeService.findAllThemes();
 		
 	}
-
 
 	@RequestMapping(value = "index", method = RequestMethod.GET)
 	public String getPosts (Model model){

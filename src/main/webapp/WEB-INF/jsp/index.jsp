@@ -14,6 +14,9 @@
  <script src="<c:url value='/resources/js/jquery.simplemodal.js' />"></script>
  <script src="resources/js/bootstrap.js"></script>
  
+ <script src="https://apis.google.com/js/platform.js" async defer></script>
+ <meta name="google-signin-client_id" content="46727822461-4ljlensngrf1r741kn9jvlaenrdkf8jk.apps.googleusercontent.com">
+ 
  <style>
  
 #logoutBut {
@@ -48,13 +51,14 @@
 				<div class="">
 					<a href="#" class="social_box fb">
 						<span class="icon"><i class="fa fa-facebook"></i></span>
-						<span class="icon_title">Connect with Facebook</span>
+						<span class="icon_title">Login with Facebook</span>
 						
 					</a>
 
 					<a href="#" class="social_box google">
+					    <div class="g-signin2" data-onsuccess="onSignIn"></div>
 						<span class="icon"><i class="fa fa-google-plus"></i></span>
-						<span class="icon_title">Connect with Google</span>
+						<span class="icon_title">Login with Google</span>
 					</a>
 				</div>
 
@@ -235,7 +239,29 @@ $('#ff').submit(function() {
 function submitForm(){
 	$('#ff').submit();
 }
+
+
+
+function onSignIn(googleUser) {
+	  var id_token = googleUser.getAuthResponse().id_token;
+	  var profile = googleUser.getBasicProfile();
+	  console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
+	  console.log('Name: ' + profile.getName());
+	  console.log('Image URL: ' + profile.getImageUrl());
+	  console.log('Email: ' + profile.getEmail());
+}
+
+
+function signOut() {
+  var auth2 = gapi.auth2.getAuthInstance();
+  auth2.signOut().then(function () {
+    console.log('User signed out.');
+  });
+}
+
+
 </script>
+
  <div class="container">
         <div class="row">
             <div class="col-md-8">
@@ -254,17 +280,14 @@ function submitForm(){
                                        
                          </div>
                          
-       
-                                     
-      <!--    <a class="btn" href="<spring:url value="/logout" />">
-         Logout ${pageContext.request.remoteUser}
-         </a>
-         <sec:csrfInput/>-->
-                                     <c:url var="logoutUrl" value="logout"/>
-                                           <form action="${logoutUrl}" method="post">
-                                           <input class="btn btn-warning" type="submit" value="logout" />
-                                               <sec:csrfInput/>
-                                           </form> 
+							<a href="#" onclick="signOut();">Sign out</a>
+
+
+                            <c:url var="logoutUrl" value="logout"/>
+                            <form action="${logoutUrl}" method="post">
+                            <input class="btn btn-warning" type="submit" value="logout" />
+                                <sec:csrfInput/>
+                            </form> 
                         <div class="clearfix"></div>
                         <hr>
                         <ul id="topics">
