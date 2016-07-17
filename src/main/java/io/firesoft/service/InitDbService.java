@@ -1,8 +1,10 @@
 package io.firesoft.service;
 
 
+import io.firesoft.model.Post;
 import io.firesoft.model.Role;
 import io.firesoft.model.User;
+import io.firesoft.repository.PostRepository;
 import io.firesoft.repository.RoleRepository;
 import io.firesoft.repository.UserRepository;
 
@@ -13,6 +15,7 @@ import javax.annotation.PostConstruct;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Transactional
@@ -26,8 +29,12 @@ public class InitDbService {
 	private UserRepository userRepository;
 	
 	
+	@Autowired
+	private PostRepository postRepository;
 	
 	
+	
+
 	@PostConstruct
 	public void init() {
 		
@@ -40,12 +47,40 @@ public class InitDbService {
 		roleRepository.save(roleAdmin);
 		
 		User userAdmin=new User();
-		userAdmin.setFullName("admin");
-		List<Role> roles = new ArrayList<Role>();
-		roles.add(roleAdmin);
-		roles.add(roleUser);
-		userAdmin.setRoles(roles);
+		userAdmin.setEnabled(true);
+		userAdmin.setUsername("admin");
+		BCryptPasswordEncoder encoderadmin = new BCryptPasswordEncoder();
+		
+		User Justuser=new User();
+		Justuser.setUsername("user");
+		BCryptPasswordEncoder encoderuser = new BCryptPasswordEncoder();
+		userAdmin.setPassword(encoderadmin.encode("admin"));
+		
+		Justuser.setPassword(encoderuser.encode("user"));
+		List<Role> rolesAdmin = new ArrayList<Role>();
+		List<Role> rolesUser = new ArrayList<Role>();
+		rolesAdmin.add(roleAdmin);
+		rolesAdmin.add(roleUser);
+		userAdmin.setRoles(rolesAdmin);	
+		Justuser.setRoles(rolesUser);
 		userRepository.save(userAdmin);
+		userRepository.save(Justuser);
+		
+		
+		Post postAdmin = new Post();
+		postAdmin.setTitle("Programmer");
+		postAdmin.setThemes("Madina");
+		postAdmin.setContent("MMMMMM");
+		postAdmin.setUser(userAdmin);
+		postRepository.save(postAdmin);
+		
+		
+	    Post postUser = new Post();
+		postUser.setTitle("Fashion");
+		postUser.setThemes("Tolunya");
+		postUser.setContent("FFFFFF");
+		postUser.setUser(Justuser);
+		postRepository.save(postUser);
 		
 		
 		
