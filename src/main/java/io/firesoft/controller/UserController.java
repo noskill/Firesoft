@@ -45,9 +45,7 @@ public class UserController {
 	   public String doRegister(@ModelAttribute("user") User user){
 		   user.setRegType(RegistrationType.Local);
 		   userservice.save(user);
-		   return "redirect:/index.html";
+		   return "redirect:/index.html?success=true";
 	 }	 
-	 
 	
-
 }
