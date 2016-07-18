@@ -6,6 +6,7 @@ import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
@@ -20,7 +21,7 @@ import org.hibernate.validator.constraints.NotEmpty;
 public class Post {
 	
 	@Id
-	@GeneratedValue
+	@GeneratedValue(strategy=GenerationType.AUTO)
 	@Column(name="POST_IP")
 	private Long id;
 
@@ -50,6 +51,21 @@ public class Post {
     private User user;
 	
 	
+	public User getUser() {
+		return user;
+	}
+
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+
+
+	public void setPostDate(Date postDate) {
+		this.postDate = postDate;
+	}
+
+
 	public Date getPostDate() {
 	return postDate;
 }

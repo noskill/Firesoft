@@ -7,6 +7,7 @@
   metadata-complete="true">
 
 
+
 <context-param>
     <param-name>contextConfigLocation</param-name>
     <param-value>
@@ -15,20 +16,24 @@
     </param-value>
 </context-param>
 
-  <filter>
-    <filter-name>CharsetFilter</filter-name>
-    <filter-class>io.firesoft.filters.CharsetFilter</filter-class>
-      <init-param>
-        <param-name>requestEncoding</param-name>
-        <param-value>UTF-8</param-value>
-      </init-param>
-  </filter>
-  
-
-  <filter-mapping>
-    <filter-name>CharsetFilter</filter-name>
-    <url-pattern>/*</url-pattern>
-  </filter-mapping>    
+<filter>
+        <filter-name>charsetFilter</filter-name>
+        <filter-class>
+             org.springframework.web.filter.CharacterEncodingFilter
+        </filter-class>
+        <init-param>
+            <param-name>encoding</param-name>
+            <param-value>UTF-8</param-value>
+        </init-param>
+        <init-param>
+            <param-name>forceEncoding</param-name>
+            <param-value>true</param-value>
+        </init-param>
+    </filter>
+    <filter-mapping>
+        <filter-name>charsetFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
     
 <filter>
    <filter-name>springSecurityFilterChain</filter-name>
@@ -40,10 +45,12 @@
  <url-pattern>/*</url-pattern>
 </filter-mapping>
 
-
 <listener>
     <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
  </listener>
+
+ 
+ 
  
  <filter>
         <filter-name>SpringOpenEntityManagerInViewFilter</filter-name>
@@ -108,4 +115,5 @@
 
 
   <display-name>Archetype Created Web Application</display-name>
-</web-app>
+  
+ </web-app>

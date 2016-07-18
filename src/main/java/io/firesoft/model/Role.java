@@ -7,18 +7,23 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.persistence.Table;
+
 
 
 @Entity
+@Table(name="role")
 public class Role {
 
 	@Id
 	@GeneratedValue
 	private Integer id;
+	
 	private String name;
 	
-	@ManyToMany
+	@ManyToMany(mappedBy="roles")
 	private List<User> user;
+	
 	public List<User> getUser() {
 		return user;
 	}

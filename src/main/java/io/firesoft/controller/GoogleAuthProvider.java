@@ -1,7 +1,9 @@
 package io.firesoft.controller;
 
 import java.io.IOException;
+import java.math.BigInteger;
 import java.security.GeneralSecurityException;
+import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -36,7 +38,7 @@ public class GoogleAuthProvider implements AuthenticationProvider {
     }
     
     @Autowired
-    UserService service;
+    UserService userService;
     
     @Override
     public Authentication authenticate(Authentication authentication)
@@ -58,12 +60,18 @@ public class GoogleAuthProvider implements AuthenticationProvider {
         }
         List<GrantedAuthority> grantedAuths = new ArrayList<>();
         UsernamePasswordAuthenticationToken result = new UsernamePasswordAuthenticationToken(authentication, authentication);
-        User user = service.findUserByEmail(userInfo.email);
+        User user = userService.findUserByEmail(userInfo.email);
         if (user == null) {
             user = new User();
             user.setEmail(userInfo.email);
             user.setFullName(userInfo.fullName);
             user.setRegType(RegistrationType.Google);
+            SecureRandom random = new SecureRandom();
+            String password = (new BigInteger(64, random)).toString(32);
+            // todo: send password to user
+            user.setPassword(password);
+            user.setUsername(userInfo.email);
+            userService.save(user);
             grantedAuths.add(new SimpleGrantedAuthority("ROLE_USER"));
             return result;
         }
