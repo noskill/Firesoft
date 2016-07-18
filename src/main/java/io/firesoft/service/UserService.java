@@ -33,15 +33,19 @@ public class UserService {
 	public User findOne(int id) {
 		return userRepository.findOne(id);
 	}
-	
-	public User findUserByUsername(String username) {
-	    CriteriaBuilder builder = em.getCriteriaBuilder();
-	    CriteriaQuery<User> query = builder.createQuery(User.class);
-	    Root<User> root = query.from(User.class);
+	public User findUserByEmail(String email){
+        CriteriaBuilder builder = em.getCriteriaBuilder();
+        CriteriaQuery<User> query = builder.createQuery(User.class);
+        Root<User> root = query.from(User.class);
  
+        query.select(root).where(builder.equal(root.get("username").as(String.class), email));
+        return findUserByCriteria(query);
 
-        query.select(root).where(builder.equal(root.get("username").as(String.class), username));
-        TypedQuery<User> pQuery= em.createQuery(query);
+	}
+	
+	private User findUserByCriteria(CriteriaQuery<User> criteria) {
+
+        TypedQuery<User> pQuery= em.createQuery(criteria);
         
         User result = null;
         try{

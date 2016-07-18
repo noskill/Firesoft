@@ -4,16 +4,16 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib uri="http://ckeditor.com" prefix="ckeditor" %>
 
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
+<meta charset="utf-8">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
  <script src="<c:url value="/resources/js/jquery-2.1.4.min.js" />"></script>
- <script src="<c:url value="/ckeditor/ckeditor.js" />"></script>
+
   <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.min.css">
   
 
@@ -91,7 +91,7 @@ Language:
       <br />
 
  
-<form:form commandName="post">
+<form:form commandName="post" accept-charset="utf-8">
   <form:errors path="*" cssClass="errorblock" element="div" />
            <form:select id="themes" path="themes"></form:select>
            <br />
@@ -121,7 +121,6 @@ Language:
        
 </form:form>
 
-<ckeditor:replace replace='edit' basePath="/Firesoftblog/ckeditor/" />
 
 
 

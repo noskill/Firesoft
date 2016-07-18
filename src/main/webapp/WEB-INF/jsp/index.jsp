@@ -39,6 +39,105 @@
 </head>
 <body>
 
+
+<script type="text/javascript">
+    $("#modal_trigger").leanModal({top : 200, overlay : 0.6, closeButton: ".modal_close" });
+    $(function(){
+        // Calling Login Form
+        $("#login_form").click(function(){
+            $(".social_login").hide();
+            $(".user_login").show();
+            return false;
+        });
+        // Calling Register Form
+        $("#register_form").click(function(){
+            $(".social_login").hide();
+            $(".user_register").show();
+            $(".header_title").text('Register');
+            return false;
+        });
+        // Going back to Social Forms
+        $(".back_btn").click(function(){
+            $(".user_login").hide();
+            $(".user_register").hide();
+            $(".social_login").show();
+            $(".header_title").text('Login');
+            return false;
+        });
+    })
+$("body").bind("ajaxSend", function(elm, xhr, s){
+    if (s.type == "POST") {
+        xhr.setRequestHeader('X-CSRF-Token', csrf_token);
+    }
+});
+
+
+$('#ff').ajaxForm({
+    success: function(response, statusText, xhr, $form)  {
+        console.log(response);
+        if(response == null) {
+            alert("authentication failure");
+        } else {
+            document.open();
+            document.write(response);
+            document.close();
+        }
+    },
+    error: function(response, statusText, error, $form)  { 
+        if(response != null && response.status == 401) {
+            document.getElementById("error_login").textContent = "wrong credentials";
+        }
+    }
+});
+
+// attach handler to form's submit event
+$('#ff').submit(function() {
+    // submit the form
+    $(this).ajaxSubmit();
+    // return false to prevent normal browser submit and page navigation
+    return false;
+});
+
+
+function submitForm(){
+    $('#ff').submit();
+}
+
+
+
+function onSignIn(googleUser) {
+      var id_token = googleUser.getAuthResponse().id_token;
+      var profile = googleUser.getBasicProfile();
+      console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
+      console.log('Name: ' + profile.getName());
+      console.log('Image URL: ' + profile.getImageUrl());
+      console.log('Email: ' + profile.getEmail());
+      var xhr = new XMLHttpRequest();
+      //todo: remove hardcode
+      xhr.open('POST', '/Firesoftblog/login');
+      xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+      xhr.onload = function() {
+        console.log('Signed in as: ' + xhr.responseText);
+      };
+      var v = document.getElementsByClassName("social_login")
+      xhr.setRequestHeader('X-CSRF-Token', v[0].children._csrf.value);
+      var data = 'password=' + id_token;
+      data += '&username=' + profile.getName()
+      xhr.send(data);
+}
+
+
+function signOut() {
+  var auth2 = gapi.auth2.getAuthInstance();
+  auth2.signOut().then(function () {
+    console.log('User signed out.');
+  });
+}
+
+
+</script>
+
+
 	<div id="modal" class="popupContainer" style="display:none;">
 		<header class="popupHeader">
 			<span class="header_title">Login</span>
@@ -70,6 +169,7 @@
 					<div class="one_half"><a href="#" id="login_form" class="btn">Login</a></div>
 					<div class="one_half last"><a href="#" id="register_form" class="btn">Sign up</a></div>
 				</div>
+				<sec:csrfInput/>
 			</div>
 			
 			
@@ -176,91 +276,6 @@ out.println("ERROR LOGIN");
 }
 %>
 </p>
-
-<script type="text/javascript">
-    $("#modal_trigger").leanModal({top : 200, overlay : 0.6, closeButton: ".modal_close" });
-    $(function(){
-        // Calling Login Form
-        $("#login_form").click(function(){
-            $(".social_login").hide();
-            $(".user_login").show();
-            return false;
-        });
-        // Calling Register Form
-        $("#register_form").click(function(){
-            $(".social_login").hide();
-            $(".user_register").show();
-            $(".header_title").text('Register');
-            return false;
-        });
-        // Going back to Social Forms
-        $(".back_btn").click(function(){
-            $(".user_login").hide();
-            $(".user_register").hide();
-            $(".social_login").show();
-            $(".header_title").text('Login');
-            return false;
-        });
-    })
-$("body").bind("ajaxSend", function(elm, xhr, s){
-    if (s.type == "POST") {
-        xhr.setRequestHeader('X-CSRF-Token', csrf_token);
-    }
-});
-
-
-$('#ff').ajaxForm({
-    success: function(response, statusText, xhr, $form)  {
-        console.log(response);
-        if(response == null) {
-            alert("authentication failure");
-        } else {
-        	document.open();
-        	document.write(response);
-        	document.close();
-        }
-    },
-    error: function(response, statusText, error, $form)  { 
-        if(response != null && response.status == 401) {
-            document.getElementById("error_login").textContent = "wrong credentials";
-        }
-    }
-});
-
-// attach handler to form's submit event
-$('#ff').submit(function() {
-    // submit the form
-    $(this).ajaxSubmit();
-    // return false to prevent normal browser submit and page navigation
-    return false;
-});
-
-
-function submitForm(){
-	$('#ff').submit();
-}
-
-
-
-function onSignIn(googleUser) {
-	  var id_token = googleUser.getAuthResponse().id_token;
-	  var profile = googleUser.getBasicProfile();
-	  console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
-	  console.log('Name: ' + profile.getName());
-	  console.log('Image URL: ' + profile.getImageUrl());
-	  console.log('Email: ' + profile.getEmail());
-}
-
-
-function signOut() {
-  var auth2 = gapi.auth2.getAuthInstance();
-  auth2.signOut().then(function () {
-    console.log('User signed out.');
-  });
-}
-
-
-</script>
 
  <div class="container">
         <div class="row">
