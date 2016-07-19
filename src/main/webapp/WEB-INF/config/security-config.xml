@@ -15,7 +15,9 @@ xsi:schemaLocation="http://www.springframework.org/schema/beans
 <beans:bean id="GoogleAuthProvider" class="io.firesoft.controller.GoogleAuthProvider"/> 
 
 <http use-expressions="true">
-    <intercept-url pattern="/user.html" access="hasRole('ROLE_USER')"/>    
+    <intercept-url pattern="/users.html" access="hasRole('ROLE_ADMIN')"/> 
+    <intercept-url pattern="/users**" access="hasRole('ROLE_ADMIN')"/> 
+    <intercept-url pattern="/users/**" access="hasRole('ROLE_ADMIN')"/>    
     <intercept-url pattern="/admin.html" access="hasRole('ROLE_ADMIN')"/>
     <intercept-url pattern="/addPost.html" access="hasRole('ROLE_USER')"/>
     <intercept-url pattern="/upload" access="hasRole('ROLE_USER')"/>
@@ -31,15 +33,21 @@ xsi:schemaLocation="http://www.springframework.org/schema/beans
     
 </http>		
 
-
 <authentication-manager>
-    <authentication-provider> 
-    <password-encoder hash="bcrypt" /> 
-    <jdbc-user-service data-source-ref="dataSource"/>  
-     </authentication-provider>
-     <authentication-provider ref="GoogleAuthProvider"/>
-</authentication-manager>
+<authentication-provider>
+    <password-encoder hash="bcrypt" />
+	<jdbc-user-service data-source-ref="dataSource"
+	authorities-by-username-query="select usersReg.username, role.name from usersReg 
+	join usersReg_role on usersReg.user_id=usersReg_role.user_user_id 
+	join role on usersReg_role.roles_id=role.id where usersReg.username=?"
+	users-by-username-query="select username,password,enabled from usersReg where username=?"
+	/>
+	
+</authentication-provider>
 
+<authentication-provider ref="GoogleAuthProvider"/>
+
+</authentication-manager>
 
 </beans:beans>
 

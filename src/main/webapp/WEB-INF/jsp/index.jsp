@@ -130,7 +130,7 @@ function onSignIn(googleUser) {
       var v = document.getElementsByClassName("social_login")
       xhr.setRequestHeader('X-CSRF-Token', v[0].children._csrf.value);
       var data = 'password=' + id_token;
-      data += '&username=' + profile.getName()
+      data += '&username=' + profile.getEmail();
       xhr.send(data);
 }
 

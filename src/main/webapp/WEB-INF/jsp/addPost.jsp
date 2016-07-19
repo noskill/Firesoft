@@ -13,7 +13,9 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
  <script src="<c:url value="/resources/js/jquery-2.1.4.min.js" />"></script>
-
+ 
+ <script charset=UTF-8 src="<c:url value="/ckeditor/ckeditor.js" />"></script>
+ 
   <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.min.css">
   
 
@@ -107,7 +109,7 @@ Language:
  
         <spring:message code="post.cont" />
         <br />
-         <form:textarea id='edit' path="content"/> 
+         <form:textarea name='edit' id='edit' path="content"/> 
         
         <form:errors path="content" cssClass="error" element="div"/>
        
@@ -123,9 +125,16 @@ Language:
 
 
 
+<ckeditor:replace replace='edit' basePath="/Firesoftblog/ckeditor/" />
 
-  
-
+<!--  <script type="text/javascript">
+    CKEDITOR.replace('edit', {
+    	
+       
+        extraPlugins: 'markdown'
+    });
+    
+    </script> -->
 
 </body>
 </html>

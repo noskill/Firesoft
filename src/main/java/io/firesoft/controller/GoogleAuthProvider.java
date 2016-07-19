@@ -36,10 +36,10 @@ public class GoogleAuthProvider implements AuthenticationProvider {
         public String email;
         public String fullName;
     }
-    
+
     @Autowired
     UserService userService;
-    
+
     @Override
     public Authentication authenticate(Authentication authentication)
             throws AuthenticationException {
@@ -55,11 +55,11 @@ public class GoogleAuthProvider implements AuthenticationProvider {
         } catch (IOException e) {
             throw new NotAuthorizedException(e);
         }
-        if (authentication.getPrincipal() != userInfo.email) {
+        if (!userInfo.email.equals(authentication.getPrincipal())) {
             throw new NotAuthorizedException("Email and password doesn't match");
         }
         List<GrantedAuthority> grantedAuths = new ArrayList<>();
-        UsernamePasswordAuthenticationToken result = new UsernamePasswordAuthenticationToken(authentication, authentication);
+        UsernamePasswordAuthenticationToken result = new UsernamePasswordAuthenticationToken(authentication.getPrincipal(), token, grantedAuths);
         User user = userService.findUserByEmail(userInfo.email);
         if (user == null) {
             user = new User();
@@ -73,22 +73,22 @@ public class GoogleAuthProvider implements AuthenticationProvider {
             user.setUsername(userInfo.email);
             userService.save(user);
             grantedAuths.add(new SimpleGrantedAuthority("ROLE_USER"));
+            result.setDetails(user);
             return result;
         }
         // todo: use user.getRoles()
         grantedAuths.add(new SimpleGrantedAuthority("ROLE_USER"));
-        result.setAuthenticated(true);
+        result.setDetails(user);
         return result;
     }
 
     @Override
     public boolean supports(Class<?> authentication) {
-        // TODO Auto-generated method stub
-        if (authentication.getClass().equals(UsernamePasswordAuthenticationToken.class))
+        if (authentication.getClass().isInstance(UsernamePasswordAuthenticationToken.class))
             return true;
         return false;
     }
-    
+
     private UserInfo validateToken(String token) throws IOException {
 
         GoogleIdTokenVerifier verifier = new GoogleIdTokenVerifier
@@ -109,7 +109,7 @@ public class GoogleAuthProvider implements AuthenticationProvider {
             result.fullName = payload.getSubject();
             System.out.println("User ID: " + payload.getSubject());
             return result;
-        } 
+        }
         throw new NotAuthorizedException("Invalid token.");
     }
 
