@@ -114,6 +114,9 @@ function submitForm(){
 
 
 function onSignIn(googleUser) {
+	  if (!need_to_login()){
+		  return false;
+	  }
       var id_token = googleUser.getAuthResponse().id_token;
       var profile = googleUser.getBasicProfile();
       console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
@@ -125,7 +128,16 @@ function onSignIn(googleUser) {
       xhr.open('POST', '/Firesoftblog/login');
       xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
       xhr.onload = function() {
-        console.log('Signed in as: ' + xhr.responseText);
+        console.log(this.response);
+        if (this.response == null || this.status == 403) {
+            alert("authentication failure");
+        } else {
+            console.log('Signed in as: ' + xhr.responseText);
+            document.open();
+            document.write(this.response);
+            document.close();
+        }
+        
       };
       var v = document.getElementsByClassName("social_login")
       xhr.setRequestHeader('X-CSRF-Token', v[0].children._csrf.value);
@@ -144,6 +156,23 @@ function signOut() {
 
 
 </script>
+
+
+<sec:authorize access="not isAuthenticated()">
+  <script>
+  function need_to_login(){
+	    return true;
+  }
+  </script>
+</sec:authorize>
+
+<sec:authorize access="isAuthenticated()">
+  <script>
+  function need_to_login(){
+	    return false;
+  }
+  </script>
+</sec:authorize>
 
 
 	<div id="modal" class="popupContainer" style="display:none;">
@@ -396,7 +425,7 @@ function signOut() {
          <sec:csrfInput/>-->
                        <sec:authorize access="isAuthenticated()">
 						<c:url var="logoutUrl" value="logout" />
-						<form action="${logoutUrl}" method="post">
+						<form action="${logoutUrl}" method="post" onSubmit="JavaScript:signOut()" >
 							<input class="btn btn-warning" type="submit" value="logout" />
 							<sec:csrfInput />
 						</form>

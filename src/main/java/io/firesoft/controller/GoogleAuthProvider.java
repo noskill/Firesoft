@@ -59,13 +59,14 @@ public class GoogleAuthProvider implements AuthenticationProvider {
             throw new NotAuthorizedException("Email and password doesn't match");
         }
         List<GrantedAuthority> grantedAuths = new ArrayList<>();
-        UsernamePasswordAuthenticationToken result = new UsernamePasswordAuthenticationToken(authentication.getPrincipal(), token, grantedAuths);
+        UsernamePasswordAuthenticationToken result = null;
         User user = userService.findUserByEmail(userInfo.email);
         if (user == null) {
             user = new User();
             user.setEmail(userInfo.email);
             user.setFullName(userInfo.fullName);
             user.setRegType(RegistrationType.Google);
+            
             SecureRandom random = new SecureRandom();
             String password = (new BigInteger(64, random)).toString(32);
             // todo: send password to user
@@ -73,11 +74,14 @@ public class GoogleAuthProvider implements AuthenticationProvider {
             user.setUsername(userInfo.email);
             userService.save(user);
             grantedAuths.add(new SimpleGrantedAuthority("ROLE_USER"));
+            result = new UsernamePasswordAuthenticationToken(user, token, grantedAuths);
             result.setDetails(user);
             return result;
         }
         // todo: use user.getRoles()
+        
         grantedAuths.add(new SimpleGrantedAuthority("ROLE_USER"));
+        result = new UsernamePasswordAuthenticationToken(user, token, grantedAuths);
         result.setDetails(user);
         return result;
     }
