@@ -4,6 +4,4 @@ public enum RegistrationType {
     Facebook,
     Google,
     Local
-    
 }
- 
