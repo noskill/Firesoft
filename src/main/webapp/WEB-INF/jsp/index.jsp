@@ -1,3 +1,7 @@
+
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+    
 <%@taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
@@ -7,13 +11,14 @@
 
 
 <head>
-
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <script src="<c:url value="/resources/js/jquery-2.1.4.min.js" />"></script>
 <script src="<c:url value='/resources/js/jquery.leanModal.min.js' />"></script>
 <script src="<c:url value='/resources/js/jquery.form.min.js'  />"></script>
 <script src="<c:url value='/resources/js/jquery.simplemodal.js' />"></script>
 <script src="resources/js/bootstrap.js"></script>
 
+ 
 <style>
 #logoutBut {
 	text-decoration: none;
@@ -43,6 +48,7 @@
 </head>
 <body>
 
+
 	<div id="modal" class="popupContainer" style="display: none;top: 50px;">
 		<header class="popupHeader">
 			<span class="header_title">Login</span> <span class="modal_close"><i
@@ -53,13 +59,16 @@
 			<!-- Social Login -->
 			<div class="social_login">
 				<div class="">
-					<a href="#" class="social_box fb"> <span class="icon"><i
-							class="fa fa-facebook"></i></span> <span class="icon_title">Connect
-							with Facebook</span>
+					<a href="#" class="social_box fb">
+						<span class="icon"><i class="fa fa-facebook"></i></span>
+						<span class="icon_title">Login with Facebook</span>
+						
+					</a>
 
-					</a> <a href="#" class="social_box google"> <span class="icon"><i
-							class="fa fa-google-plus"></i></span> <span class="icon_title">Connect
-							with Google</span>
+					<a href="#" class="social_box google">
+					    <div class="g-signin2" data-onsuccess="onSignIn"></div>
+						<span class="icon"><i class="fa fa-google-plus"></i></span>
+						<span class="icon_title">Login with Google</span>
 					</a>
 				</div>
 
@@ -75,6 +84,7 @@
 						<a href="#" id="register_form" class="btn">Sign up</a>
 					</div>
 				</div>
+				<sec:csrfInput/>
 			</div>
 
 
@@ -104,13 +114,14 @@
 							}
 						%>
 					</p>
-
+  
 
 					<div class="error" id="error_login"></div>
 
 					<label>Username</label> <input type="text" name='username' value='' />
-					<br /> <label>Password</label> <input type="password"
-						name='password' /> <br />
+					<br /> 
+					<label>Password</label> 
+					<input type="password" 	name='password' /> <br />
 
 					<div class="checkbox">
 						<input id="remember" type="checkbox" /> <label for="remember">Remember
@@ -150,6 +161,10 @@
 			<!-- Register Form -->
 		
 				<form:form  modelAttribute="user" method="POST" cssClass="user_register">
+				
+				<c:if test="${param.success eq true }">
+				    <div class="alert alert-success">Registration successfull!</div>
+				</c:if>
 					<label>Full Name</label>
 					<input name="fullName"  type="text" />
 					<br />
@@ -258,93 +273,50 @@
 			$('#ff').submit();
 		}
 	</script>
-	<div class="container">
-		<div class="row">
-			<div class="col-md-8">
-				<div class="main-col">
-					<div class="block">
-						<div class="hero-unit">
+	
+		
+					<div class="block" style="text-align: right">
+						<div class="hero-unit" >
 							<div>
 							  <sec:authorize access="isAuthenticated()">
 								<h4>
-									Welcome to Firesoft.io
-									<sec:authentication property="name" />
-									!
+									Welcome to Firesoft.io <sec:authentication property="principal.user.fullName" />
+									!    
+				 				
+									
+									
 								</h4>
 								</sec:authorize>
+								
+								
 							</div>
 							<sec:authorize access="isAuthenticated()">
 								<a class="btn btn-primary" href="addPost.html">Add new post
-									»</a>
+									Â»</a>
 							</sec:authorize>
 							<sec:authorize access="hasRole('ROLE_ADMIN')">
 								<a class="btn btn-primary" href="EditPost.html">Edit new
-									post»</a>
+									postÂ»</a>
 							</sec:authorize>
 
 						</div>
 
+                     <c:if test="${param.success eq true }">
+				    <div class="alert alert-success">Registration successfull!</div>
+				</c:if>
 
-
-						<!--    <a class="btn" href="<spring:url value="/logout" />">
-         Logout ${pageContext.request.remoteUser}
-         </a>
-         <sec:csrfInput/>-->
+					
                        <sec:authorize access="isAuthenticated()">
 						<c:url var="logoutUrl" value="logout" />
 						<form action="${logoutUrl}" method="post">
 							<input class="btn btn-warning" type="submit" value="logout" />
 							<sec:csrfInput />
 						</form>
-					<!--
-						<div class="clearfix"></div>
-						<hr>
-						<ul id="topics">
-						</ul>
-						<h3>Statistics</h3>
-						  <ul>
-							<li>Total Number of Users: <strong>100</strong></li>
-							<li>Total Number of Posts: <strong>100</strong></li>
-							<li>Total Number of Categories: <strong>100</strong></li>
-						</ul> -->
+					
 	</sec:authorize>
 					</div>
-				</div>
-			</div>
-
-			<sec:authorize access="! isAuthenticated()">
-				<div class="col-md-4">
-					<div id="sidebar">
-						<div class="block">
-							<h3>Login Form</h3>
-							<form role="form">
-								<div class="form-group">
-									<label>Username</label> <input name="username" type="text"
-										class="form-control" placeholder="Enter Username">
-								</div>
-								<div class="form-group">
-									<label>Password</label> <input name="password" type="password"
-										class="form-control" placeholder="Enter Password">
-								</div>
-								<div class="checkbox">
-									<label> <input type="checkbox"> Check me out
-									</label>
-								</div>
-								<button name="submit" type="submit" class="btn btn-primary">Login</button>
-								<a class="btn btn-default" href="register.html">Create
-									account</a>
-							</form>
-						</div>
-						<div class="block">
-							<h3>Categories</h3>
-							<a href="#" class="list-group-item active">All Topics<span
-								class="badge pull-right">14</span></a>
-						</div>
-					</div>
-				</div>
-			</sec:authorize>
-		</div>
-	</div>
+		
+	
 	<!-- /.container -->
 
 	<c:forEach items="${posts}" var="post">
