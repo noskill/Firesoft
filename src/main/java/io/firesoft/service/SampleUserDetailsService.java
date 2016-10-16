@@ -17,30 +17,24 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class SampleUserDetailsService extends JdbcDaoImpl{
-	
-	@Autowired
-	private UserRepository userRepository;
-	
-	
-	@Transactional
-	 public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException, DataAccessException {
-		
-		 
-		 User user = userRepository.findByUsername(username);
-	
-	        if (user==null) {
-	            logger.debug("Query returned no results for user '" + username + "'");
-	 
-	            throw new UsernameNotFoundException(
-	                    messages.getMessage("JdbcDaoImpl.notFound", new Object[]{username}, "Username {0} not found"));
-	        }
-	        return new SampleUserDetails(user);
-	        
-	    }
-	 
-	    
-	
-
-	
-
+    
+    @Autowired
+    private UserRepository userRepository;
+    
+    
+    @Transactional
+     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException, DataAccessException {
+        
+         
+            User user = userRepository.findByUsername(username);
+    
+            if (user==null) {
+                logger.debug("Query returned no results for user '" + username + "'");
+     
+                throw new UsernameNotFoundException(
+                        messages.getMessage("JdbcDaoImpl.notFound", new Object[]{username}, "Username {0} not found"));
+            }
+            return new SampleUserDetails(user);
+            
+        }
 }
