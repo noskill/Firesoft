@@ -70,7 +70,7 @@
 					    <li><a href='<spring:url value="/account.html" />'>My account</a></li>
 						<li><c:url var="logoutUrl" value="logout" />
 							<form style="margin-left: 15px; margin-top: 15px " action="${logoutUrl}"
-								method="post">
+								method="post" onSubmit="JavaScript:signOut()">
 								<a id="logoutBut" class="navbar-inverse nav a navbar-nav"
 									href="<spring:url value="/logout" />">Logout</a>
 								<sec:csrfInput />

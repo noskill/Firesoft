@@ -53,17 +53,22 @@ public class InitDbService {
 		BCryptPasswordEncoder encoderadmin = new BCryptPasswordEncoder();
 		
 		User Justuser=new User();
+		Justuser.setEnabled(true);
 		Justuser.setUsername("user");
+		Justuser.setFullName("user");		
 		BCryptPasswordEncoder encoderuser = new BCryptPasswordEncoder();
 		userAdmin.setPassword(encoderadmin.encode("admin"));
-		
+
 		Justuser.setPassword(encoderuser.encode("user"));
+		
 		List<Role> rolesAdmin = new ArrayList<Role>();
 		List<Role> rolesUser = new ArrayList<Role>();
 		rolesAdmin.add(roleAdmin);
 		rolesAdmin.add(roleUser);
+		rolesUser.add(roleUser);
 		userAdmin.setRoles(rolesAdmin);	
 		Justuser.setRoles(rolesUser);
+		
 		userRepository.save(userAdmin);
 		userRepository.save(Justuser);
 		

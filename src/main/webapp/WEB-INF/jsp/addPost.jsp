@@ -126,14 +126,7 @@ Language:
 
 <ckeditor:replace replace='edit' basePath="/Firesoftblog/ckeditor/" />
 
-<!--  <script type="text/javascript">
-    CKEDITOR.replace('edit', {
-    	
-       
-        extraPlugins: 'markdown'
-    });
-    
-    </script> -->
+
 
 </body>
 </html>
