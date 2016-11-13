@@ -32,6 +32,7 @@ public class FileUploadController {
     public void upload() {
  
     }
+    
     @RequestMapping(value = "/upload-single", method = RequestMethod.POST,
             produces = "text/html;charset=UTF-8")
     @ResponseBody
@@ -63,6 +64,7 @@ public class FileUploadController {
         }
         return "Loaded File:"+url;
     }
+    
     /**
      * Upload multiple file using Spring Controller
      */

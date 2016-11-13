@@ -2,13 +2,9 @@
              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
              xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd"
              version="2.0">
-             
              <persistence-unit name="punit">
              	<class>io.firesoft.model.User</class>
              	<class>io.firesoft.model.Post</class>
              	<class>io.firesoft.model.Role</class>
-             
-             
              </persistence-unit>
-             
              </persistence>

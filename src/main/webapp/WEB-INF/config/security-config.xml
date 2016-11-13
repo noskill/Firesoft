@@ -8,8 +8,11 @@ xsi:schemaLocation="http://www.springframework.org/schema/beans
 		   http://www.springframework.org/schema/security/spring-security.xsd">
  
 <beans:bean id="myAuthenticationFailureHandler"
-        class="io.firesoft.controller.CustomAuthenticationFailureHandler" />
+        class="io.firesoft.controller.myAuthenticationFailureHandler" />
 
+
+
+<beans:bean id="GoogleAuthProvider" class="io.firesoft.controller.GoogleAuthProvider"/> 
 
 <http use-expressions="true">
     <intercept-url pattern="/users.html" access="hasRole('ROLE_ADMIN')"/> 
@@ -26,7 +29,7 @@ xsi:schemaLocation="http://www.springframework.org/schema/beans
     username-parameter="username"
     password-parameter="password"/>
     <logout logout-success-url="/"/>
-    <csrf disabled="true"/>
+    <csrf disabled="false"/>
     
 </http>		
 
@@ -41,16 +44,10 @@ xsi:schemaLocation="http://www.springframework.org/schema/beans
 	/>
 	
 </authentication-provider>
+
+<authentication-provider ref="GoogleAuthProvider"/>
+
 </authentication-manager>
-
-<!-- <authentication-manager>
-    <authentication-provider> 
-    <password-encoder hash="bcrypt" /> 
-    <jdbc-user-service data-source-ref="dataSource"/>      
-     </authentication-provider>   
-</authentication-manager> -->
-
-
 
 </beans:beans>
 

@@ -17,7 +17,7 @@ import org.springframework.security.web.authentication.SimpleUrlAuthenticationFa
 
 
 
-public class CustomAuthenticationFailureHandler extends SimpleUrlAuthenticationFailureHandler {
+public class myAuthenticationFailureHandler extends SimpleUrlAuthenticationFailureHandler {
 
     @Override
     public void onAuthenticationFailure(HttpServletRequest request,
