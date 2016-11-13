@@ -52,14 +52,13 @@ public class User {
 		this.roles = roles;
 	}
 
-	
-	
-	
-	public User(String email, String password, String fullname) {
+	public User(String email, String password, String fullname, String username) {
         this.email = email;
         this.password = password;
         this.fullName = fullname;
+        this.username = username;
     }
+	
 	
 	public User(){
 	

@@ -49,6 +49,7 @@ public class InitDbService {
 		User userAdmin=new User();
 		userAdmin.setEnabled(true);
 		userAdmin.setUsername("admin");
+		userAdmin.setFullName("admin");
 		BCryptPasswordEncoder encoderadmin = new BCryptPasswordEncoder();
 		
 		User Justuser=new User();
@@ -81,14 +82,7 @@ public class InitDbService {
 		postUser.setContent("FFFFFF");
 		postUser.setUser(Justuser);
 		postRepository.save(postUser);
-		
-		
-		
-		
-		
-		
-	
-		
+			
 	}
 
 }

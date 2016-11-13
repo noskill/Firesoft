@@ -3,6 +3,7 @@ package io.firesoft.controller;
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.nio.charset.Charset;
 import java.util.Calendar;
 import java.util.Iterator;
 import java.util.regex.Pattern;
@@ -32,6 +33,7 @@ public class FileUploadController {
     public void upload() {
  
     }
+    
     @RequestMapping(value = "/upload-single", method = RequestMethod.POST,
             produces = "text/html;charset=UTF-8")
     @ResponseBody
@@ -39,8 +41,10 @@ public class FileUploadController {
             @RequestParam("file") MultipartFile file, HttpServletRequest request) {
         String url;
         String storedFolderLocation = createStoredFolder(request);
-        String uploadedFileName = file.getOriginalFilename();
+        String fileName = file.getOriginalFilename();
+        String uploadedFileName = Charset.forName("UTF-8").encode(fileName).toString();
         System.out.println(uploadedFileName);
+     
         try {
             byte[] bytes = file.getBytes();
             String storedFileLocation = storedFolderLocation + FILE_SEPARATOR + uploadedFileName;
@@ -61,8 +65,10 @@ public class FileUploadController {
         } catch (Exception e) {
             return e.getMessage();
         }
+        System.out.println("Loaded File:"+url);
         return "Loaded File:"+url;
     }
+    
     /**
      * Upload multiple file using Spring Controller
      */
@@ -168,6 +174,7 @@ public class FileUploadController {
                 return "You failed to upload " + uploadedFileName + " => " + e.getMessage();
             }
         }
+        System.out.println(filePaths);
         return filePaths;
     }
  
