@@ -155,6 +155,7 @@ function onSignIn(googleUser) {
       }
       var data = 'password=' + id_token;
       data += '&username=' + profile.getEmail();
+
       xhr.send(data);
 }
 

@@ -16,7 +16,7 @@ public class SampleUserDetails extends  org.springframework.security.core.userde
 	
 	public SampleUserDetails(User user) {
 		super(user.getUsername(), user.getPassword(), AuthorityUtils
-                .createAuthorityList("ROLE_USER")); // 
+                .createAuthorityList(user.getNameRoles())); // 
 		this.user = user;
 	}
 	

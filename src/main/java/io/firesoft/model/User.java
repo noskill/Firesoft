@@ -113,5 +113,14 @@ public class User {
 		this.enabled = enabled;
 	}
 	
+	public String[] getNameRoles(){
+		String[] nameroles = new String[this.getRoles().size()];
+			int i = 0;
+			for (Role role: this.getRoles()){
+				nameroles[i++] = role.getName();
+			}
+			return nameroles;
+		}
+	
 
 }

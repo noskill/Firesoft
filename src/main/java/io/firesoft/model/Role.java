@@ -20,7 +20,7 @@ public class Role {
 	
 	private String name;
 	
-	@ManyToMany(mappedBy="roles")
+	@ManyToMany(mappedBy="roles", cascade=javax.persistence.CascadeType.REMOVE)
 	private List<User> user;
 	
 	public List<User> getUser() {

@@ -49,7 +49,7 @@ public class Post {
     @Column(name = "POSTAT")
     private String postDate;
 
-    @ManyToOne
+    @ManyToOne(cascade=javax.persistence.CascadeType.REMOVE)
     @JoinColumn(name="user_id")
     private User user;
 	

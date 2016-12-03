@@ -1,12 +1,15 @@
 package io.firesoft.controller;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.math.BigInteger;
 import java.security.GeneralSecurityException;
 import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Properties;
 
 import javax.ws.rs.NotAuthorizedException;
 
@@ -103,10 +106,21 @@ public class GoogleAuthProvider implements AuthenticationProvider {
     }
 
     private UserInfo validateToken(String token) throws IOException {
+    	
+    	Properties prop = new Properties();
+    	String propFileName = "auth.properties";
+    	InputStream inputStream = getClass().getClassLoader().getResourceAsStream(propFileName);
 
+    	if (inputStream != null) {
+			prop.load(inputStream);
+		} else {
+			throw new FileNotFoundException("property file '" + propFileName + "' not found in the classpath");
+		}
+    	
+    	
         GoogleIdTokenVerifier verifier = new GoogleIdTokenVerifier
             .Builder(new NetHttpTransport(), new GsonFactory())
-                .setAudience(Arrays.asList("46727822461-4ljlensngrf1r741kn9jvlaenrdkf8jk.apps.googleusercontent.com"))
+                .setAudience(Arrays.asList(prop.getProperty("google.secret")))
                 .build();
 
         UserInfo result = new UserInfo();
