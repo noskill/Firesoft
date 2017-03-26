@@ -10,7 +10,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Properties;
-
 import javax.ws.rs.NotAuthorizedException;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,7 +31,6 @@ import com.google.api.client.json.gson.GsonFactory;
 
 import io.firesoft.model.RegistrationType;
 import io.firesoft.model.User;
-import io.firesoft.service.SampleUserDetailsService;
 import io.firesoft.service.UserService;
 
 @Component
@@ -41,6 +39,7 @@ public class GoogleAuthProvider implements AuthenticationProvider {
     private class UserInfo{
         public String email;
         public String fullName;
+        
     }
 
     @Autowired
@@ -68,6 +67,8 @@ public class GoogleAuthProvider implements AuthenticationProvider {
         if (!userInfo.email.equals(authentication.getPrincipal())) {
             throw new NotAuthorizedException("Email and password doesn't match");
         }
+       
+       
         List<GrantedAuthority> grantedAuths = new ArrayList<>();
         UsernamePasswordAuthenticationToken result = null;
         User user = userService.findUserByEmail(userInfo.email);
@@ -82,7 +83,7 @@ public class GoogleAuthProvider implements AuthenticationProvider {
             // todo: send password to user
             user.setPassword(password);
             user.setUsername(userInfo.email);
-            user.setFullName(userInfo.email);
+            user.setFullName(userInfo.fullName);
             userService.save(user);
             UserDetails userDetails = detailsService.loadUserByUsername(user.getUsername());
             grantedAuths.add(new SimpleGrantedAuthority("ROLE_USER"));
@@ -97,7 +98,8 @@ public class GoogleAuthProvider implements AuthenticationProvider {
         result.setDetails(userDetails);
         return result;
     }
-
+    
+ 
     @Override
     public boolean supports(Class<?> authentication) {
         if (authentication.getClass().isInstance(UsernamePasswordAuthenticationToken.class))
@@ -133,7 +135,8 @@ public class GoogleAuthProvider implements AuthenticationProvider {
         if (idToken != null) {
             Payload payload = idToken.getPayload();
             result.email = payload.getEmail();
-            result.fullName = payload.getSubject();
+            String name = (String) idToken.getPayload().get("name");
+            result.fullName = name;
             System.out.println("User ID: " + payload.getSubject());
             return result;
         }
