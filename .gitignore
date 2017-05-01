@@ -19,3 +19,6 @@ target/*
 .project
 .springBeans
 .settings
+
+
+src/main/resources/auth.properties

@@ -8,8 +8,12 @@ import io.firesoft.repository.PostRepository;
 import io.firesoft.repository.RoleRepository;
 import io.firesoft.repository.UserRepository;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Properties;
 
 import javax.annotation.PostConstruct;
 import javax.transaction.Transactional;
@@ -46,10 +50,27 @@ public class InitDbService {
 		roleAdmin.setName("ROLE_ADMIN");
 		roleRepository.save(roleAdmin);
 		
+        Properties prop = new Properties();
+        String propFileName = "auth.properties";
+        InputStream inputStream = getClass().getClassLoader().getResourceAsStream(propFileName);
+
+        if (inputStream != null) {
+            try {
+                prop.load(inputStream);
+            } catch (IOException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+        } else {
+            return;
+            //throw new FileNotFoundException("property file '" + propFileName + "' not found in the classpath");
+        }
+		
 		User userAdmin=new User();
 		userAdmin.setEnabled(true);
-		userAdmin.setUsername("admin");
+		userAdmin.setUsername(prop.getProperty("admin.username"));
 		userAdmin.setFullName("admin");
+		userAdmin.setEmail(prop.getProperty("admin.username"));
 		BCryptPasswordEncoder encoderadmin = new BCryptPasswordEncoder();
 		
 		User Justuser=new User();
