@@ -20,6 +20,7 @@
 				   <h1>${post.title}</h1>
 				</td>
 				<td>${post.content}</td>
+				<td> <a href="<spring:url value="/deletePost/${post.id}.html" />" class="btn btn-danger">Delete</a></td>
 			</tr>
 		</c:forEach>
 	</tbody>

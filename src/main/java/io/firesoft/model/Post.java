@@ -26,7 +26,7 @@ public class Post {
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	@Column(name="POST_IP")
-	private Long id;
+	private Integer id;
 
 	@NotNull
 	@NotEmpty
@@ -49,7 +49,7 @@ public class Post {
     @Column(name = "POSTAT")
     private String postDate;
 
-    @ManyToOne(cascade=javax.persistence.CascadeType.REMOVE)
+    @ManyToOne
     @JoinColumn(name="user_id")
     private User user;
 	
@@ -93,7 +93,7 @@ public void setPostDate() {
 		return content;
 	}
 	
-	public Long getId() {
+	public Integer getId() {
 		return id;
 	}
 
@@ -105,7 +105,7 @@ public void setPostDate() {
 		this.content = content;
 	}
 
-	public void setId(Long id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 

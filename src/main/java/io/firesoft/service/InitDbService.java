@@ -2,6 +2,7 @@ package io.firesoft.service;
 
 
 import io.firesoft.model.Post;
+import io.firesoft.model.RegistrationType;
 import io.firesoft.model.Role;
 import io.firesoft.model.User;
 import io.firesoft.repository.PostRepository;
@@ -14,6 +15,7 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
+import java.util.UUID;
 
 import javax.annotation.PostConstruct;
 import javax.transaction.Transactional;
@@ -35,21 +37,24 @@ public class InitDbService {
 	
 	@Autowired
 	private PostRepository postRepository;
-	
-	
-	
 
 	@PostConstruct
 	public void init() {
-		
-		Role roleUser = new Role();
-		roleUser.setName("ROLE_USER");
-		roleRepository.save(roleUser);
-		
-		Role roleAdmin = new Role();
-		roleAdmin.setName("ROLE_ADMIN");
-		roleRepository.save(roleAdmin);
-		
+	    String role_user_str = "ROLE_USER";
+	    Role roleUser = roleRepository.findByName(role_user_str);
+	    if (roleUser == null){
+    		roleUser = new Role();
+    		roleUser.setName(role_user_str);
+    		roleRepository.save(roleUser);
+	    }
+	    String role_admin_str = "ROLE_ADMIN";
+	    Role roleAdmin = roleRepository.findByName(role_admin_str);
+	    if (roleAdmin == null){
+    		roleAdmin = new Role();
+    		roleAdmin.setName(role_admin_str);
+    		roleRepository.save(roleAdmin);
+	    }
+
         Properties prop = new Properties();
         String propFileName = "auth.properties";
         InputStream inputStream = getClass().getClassLoader().getResourceAsStream(propFileName);
@@ -65,14 +70,25 @@ public class InitDbService {
             return;
             //throw new FileNotFoundException("property file '" + propFileName + "' not found in the classpath");
         }
+        User userAdmin = userRepository.findByUsername(prop.getProperty("admin.username"));
+        if (userAdmin == null) {
+    		userAdmin=new User();
+    		userAdmin.setEnabled(true);
+    		userAdmin.setUsername(prop.getProperty("admin.username"));
+    		userAdmin.setFullName("admin");
+    		List<Role> rolesAdmin = new ArrayList<Role>();
+    		rolesAdmin.add(roleAdmin);
+    		rolesAdmin.add(roleUser);
+    		userAdmin.setRoles(rolesAdmin);
+    		userAdmin.setRegType(RegistrationType.Google);
+    		userAdmin.setEmail(prop.getProperty("admin.username"));
+    		BCryptPasswordEncoder encoderadmin = new BCryptPasswordEncoder();
+    		UUID random = UUID.randomUUID();
+    		userAdmin.setPassword(encoderadmin.encode(random.toString()));
+    		userRepository.save(userAdmin);
+        }
 		
-		User userAdmin=new User();
-		userAdmin.setEnabled(true);
-		userAdmin.setUsername(prop.getProperty("admin.username"));
-		userAdmin.setFullName("admin");
-		userAdmin.setEmail(prop.getProperty("admin.username"));
-		BCryptPasswordEncoder encoderadmin = new BCryptPasswordEncoder();
-		
+		/*
 		User Justuser=new User();
 		Justuser.setEnabled(true);
 		Justuser.setUsername("user");
@@ -108,6 +124,7 @@ public class InitDbService {
 		postUser.setContent("FFFFFF");
 		postUser.setUser(Justuser);
 		postRepository.save(postUser);
+		*/
 			
 	}
 

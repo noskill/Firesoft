@@ -11,4 +11,6 @@ public interface PostService {
 	List<Post> findAllPosts();
 	
 	void save(Post post, String name);
+
+	void delete(int id);
 }

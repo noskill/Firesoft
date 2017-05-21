@@ -5,20 +5,15 @@ import io.firesoft.model.Post;
 import io.firesoft.model.Themes;
 import io.firesoft.service.PostService;
 import io.firesoft.service.ThemeService;
-
-
-
 import java.security.Principal;
 import java.util.List;
-
 import javax.validation.Valid;
-import javax.ws.rs.PathParam;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -80,5 +75,12 @@ public class PostController {
 		model.addAttribute("posts",posts);
 		return "index";
 	}
+	
+	@RequestMapping("/deletePost/{id}")
+	public String deletePost(@PathVariable("id") int id){
+		postService.delete(id);
+		return "redirect:/account.html";
+	}
+
 
 }

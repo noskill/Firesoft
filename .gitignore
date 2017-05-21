@@ -22,3 +22,8 @@ target/*
 
 
 src/main/resources/auth.properties
+Firesoftblog.iml
+Firesoftblog.ipr
+Firesoftblog.iws
+bin/
+
