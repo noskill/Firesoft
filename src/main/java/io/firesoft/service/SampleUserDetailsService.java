@@ -21,6 +21,8 @@ public class SampleUserDetailsService extends JdbcDaoImpl{
     @Autowired
     private UserRepository userRepository;
     
+    @Autowired
+    private LoginAttemptService loginAttemptService;
     
     @Transactional
      public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException, DataAccessException {
@@ -34,6 +36,11 @@ public class SampleUserDetailsService extends JdbcDaoImpl{
                 throw new UsernameNotFoundException(
                         messages.getMessage("JdbcDaoImpl.notFound", new Object[]{username}, "Username {0} not found"));
             }
+            
+            if (loginAttemptService.isBlocked(username)) {
+                throw new RuntimeException("blocked");
+            }
+            
             return new SampleUserDetails(user);
             
         }
